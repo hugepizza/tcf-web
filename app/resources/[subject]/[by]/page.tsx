@@ -33,7 +33,9 @@ async function ResourcesPage({
     notFound();
   }
   const response = await fetch(
-    apiUrl(`/resources/${by}?subject=${subject.toUpperCase()}`)
+    apiUrl(
+      `/resources/${by}?subject=${subject.toUpperCase()}&page=${currentPage}&pageSize=${itemsPerPage}`
+    )
   );
   const data = (await response.json()) as {
     data: {
