@@ -24,6 +24,9 @@ function Main() {
   const currentQuestion = practice.questions.find(
     (question) => question.id === clientSideCurrentQuestion
   );
+  const currentQuestionIndex = practice.questions.findIndex(
+    (question) => question.id === clientSideCurrentQuestion
+  );
   if (!currentQuestion) {
     notFound();
   }
@@ -34,7 +37,7 @@ function Main() {
     <>
       <div className="text-lg font-semibold flex items-center gap-2 px-3 py-4 bg-white">
         <AlignLeft className="w-4 h-4" />
-        Question {clientSideCurrentQuestion} 难度：
+        Question {currentQuestionIndex + 1} 难度：
         {currentQuestion.difficulty}（{currentQuestion.score}分）
       </div>
       <div className="grow flex flex-col">

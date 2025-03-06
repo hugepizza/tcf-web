@@ -23,10 +23,11 @@ async function PracticePage({ params }: { params: Promise<{ id: string }> }) {
     return notFound();
   }
   return (
-    <div className="flex flex-col w-full h-screen">
+    <div className="flex flex-col w-full sm:h-screen">
       <HeaderServer />
       <PracticeProvider practice={practice}>
-        <div className="flex sm:flex-row flex-col  w-full grow">
+        {/* 手机端反向布局 题目在上面看起来合理一点 */}
+        <div className="flex sm:flex-row flex-col-reverse  w-full grow">
           <Side />
           <div className="grow flex flex-col bg-[#FAFAFA]">
             <Main />

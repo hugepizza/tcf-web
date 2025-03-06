@@ -13,9 +13,6 @@ import {
 } from "@/components/ui/pagination";
 
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import NavItem from "@/components/Header/Universal/NavItem";
-import { Subject } from "@/shared/enum";
-import { AlignLeft } from "lucide-react";
 
 async function ResourcesPage({
   params,
@@ -90,19 +87,8 @@ async function ResourcesPage({
   };
 
   return (
-    <div className="gap-3 h-full flex flex-col">
-      <div className="border-b-[1px] border-[#F2F2F2] px-3 py-4 flex flex-row items-center justify-start bg-white">
-        <div className="h-12 flex flex-row items-center justify-start">
-          <div className="flex flex-row items-center justify-center gap-2 text-lg font-semibold">
-            <AlignLeft className="w-6 h-6" />
-            {subject === Subject.READING.toLocaleLowerCase() ? "阅读" : "听力"}
-          </div>
-          <div className="w-8" />
-          <NavItem text="按套题分组" path="/resources/by-suit" active={true} />
-        </div>
-      </div>
-
-      <div className="grow overflow-y-scroll px-10 py-2">
+    <>
+      <div className="grow overflow-y-scroll sm:px-10 py-2">
         <Table className="bg-white grow">
           <TableBody>
             {data.data.items.map((item, index) => (
@@ -156,7 +142,7 @@ async function ResourcesPage({
           </PaginationContent>
         </Pagination>
       </div>
-    </div>
+    </>
   );
 }
 

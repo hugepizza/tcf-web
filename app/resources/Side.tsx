@@ -5,7 +5,7 @@ import Link from "next/link";
 
 function Side() {
   return (
-    <div className="sm:w-1/6 flex flex-col p-2  gap-2 w-0 border-r-[1px] border-[#F2F2F2]">
+    <div className="sm:w-1/6 hidden sm:flex flex-col p-2  gap-2 w-0 border-r-[1px] border-[#F2F2F2]">
       <Link href="/" className="">
         <Button
           variant="outline"
