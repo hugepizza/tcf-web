@@ -45,6 +45,7 @@ export default function PracticeProvider({
 }) {
   const isSubmitted = practice.submittedAt !== null;
 
+  console.log("isSubmitted", isSubmitted);
   const [isClientSideTimeOut, setClientSideTimeOut] = useState(false);
   const [isClientSideReadOnly, setClientSideReadOnly] = useState(isSubmitted);
 
@@ -74,6 +75,7 @@ export default function PracticeProvider({
   ]);
 
   const nextQuestion = useCallback(async () => {
+    console.log("nextQuestion isClientSideReadOnly:", isClientSideReadOnly);
     const nextQuestionIndex =
       practice.questions.findIndex(
         (question) => question.id === clientSideCurrentQuestion

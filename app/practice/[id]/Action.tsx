@@ -27,8 +27,10 @@ function Action() {
     return Math.max(initRemainingSeconds, 0);
   });
   useEffect(() => {
-    setClientSideTimeOut(remainingSeconds <= 0);
-    setClientSideReadOnly(remainingSeconds <= 0);
+    if (!isSubmitted) {
+      setClientSideTimeOut(remainingSeconds <= 0);
+      setClientSideReadOnly(remainingSeconds <= 0);
+    }
   }, [remainingSeconds]);
 
   useEffect(() => {
