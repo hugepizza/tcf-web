@@ -80,12 +80,11 @@ export default function PracticeProvider({
       ) + 1;
     const hasNextQuestion = nextQuestionIndex < practice.questions.length;
 
-    if (!hasNextQuestion) {
-      await submitPractice();
-      return;
-    }
-
     if (!isClientSideReadOnly) {
+      if (!hasNextQuestion) {
+        await submitPractice();
+        return;
+      }
       await submitAnswer({
         practiceId: practice.id,
         answer: clientSideCurrentAnswer,
@@ -107,7 +106,12 @@ export default function PracticeProvider({
       });
     }
     setClientSideCurrentQuestion(practice.questions[nextQuestionIndex].id);
-  }, [clientSideCurrentAnswer, clientSideCurrentQuestion]);
+  }, [
+    clientSideCurrentAnswer,
+    clientSideCurrentQuestion,
+    isClientSideReadOnly,
+    submitPractice,
+  ]);
   const jumpToQuestion = (questionId: string) => {
     setClientSideCurrentQuestion(questionId);
   };
