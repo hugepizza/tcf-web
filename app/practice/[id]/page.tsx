@@ -12,8 +12,9 @@ import Main from "./Main";
 import PracticeProvider from "./context";
 import HeaderServer from "@/components/Header/Universal";
 
-async function PracticePage({ params }: { params: { id: string } }) {
-  const data = await fetch(apiUrl(`/practices/${params.id}`));
+async function PracticePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const data = await fetch(apiUrl(`/practices/${id}`));
   const practice = (await data.json()).data as Practice;
   const currentQuestion = practice.questions.find(
     (question) => question.id === practice.currentQuestion
