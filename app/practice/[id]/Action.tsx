@@ -4,8 +4,19 @@ import { ArrowLeft, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { usePractice } from "./context";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useToast } from "@/hooks/use-toast";
 
 function Action() {
   const {
@@ -118,8 +129,25 @@ function Timer({
   remainingSeconds: number;
   isClientSideTimeOut: boolean;
 }) {
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   if (isSubmitted) return null;
   if (isClientSideTimeOut) return null;
+
+  if (!mounted) {
+    return (
+      <div className="w-auto flex items-center gap-2 font-semibold text-[#434343] left-1/2 right-1/2">
+        <Clock className="w-4 h-4" />
+        剩余时间
+        <span className="w-[4.5rem] font-mono text-center">--:--</span>
+      </div>
+    );
+  }
+
   return (
     <div className="w-auto flex items-center gap-2 font-semibold text-[#434343] left-1/2 right-1/2">
       <Clock className="w-4 h-4" />
@@ -172,20 +200,49 @@ function SubmitButton({
   isLastQuestion: boolean;
   isClientSideTimeOut: boolean;
   isSubmitted: boolean;
-  submitPractice: () => void;
+  submitPractice: () => Promise<void>;
 }) {
+  const { toast } = useToast();
   if (isSubmitted) return null;
   if (!isClientSideTimeOut && !isLastQuestion) return null;
   return (
-    <Button
-      className="bg-[#1782FF] text-white hover:bg-[#1782FF]/80 rounded-xl"
-      size={"sm"}
-      onClick={() => submitPractice()}
-    >
-      {isClientSideTimeOut ? "时间结束 请交卷" : "交卷"}
-    </Button>
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button
+          className="bg-[#1782FF] text-white hover:bg-[#1782FF]/80 rounded-xl"
+          size={"sm"}
+        >
+          {isClientSideTimeOut ? "时间结束 请交卷" : "交卷"}
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>交卷</DialogTitle>
+        </DialogHeader>
+        <DialogDescription>
+          交卷后无法继续答题，可查看评级和答案。确定交卷吗？
+        </DialogDescription>
+        <DialogFooter>
+          <Button
+            variant={"default"}
+            onClick={async () => {
+              await submitPractice();
+              toast({
+                title: "交卷成功",
+              });
+            }}
+          >
+            确定交卷
+          </Button>
+          <DialogClose asChild>
+            <Button variant={"outline"}>取消</Button>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   );
 }
+
 function NextButton({
   isClientSideTimeOut,
   isLastQuestion,

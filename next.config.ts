@@ -20,6 +20,12 @@ const nextConfig: NextConfig = {
       {
         hostname: "examens.preptcfcanada.com",
       },
+      {
+        hostname: "celpipmaster.com",
+      },
+      {
+        hostname: "assets.celpipbro.com",
+      },
     ],
   },
   // async rewrites() {

@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { usePractice } from "./context";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
+import { Grade } from "@/shared/schemas/practice";
 
 function Side() {
   const {
@@ -31,7 +32,7 @@ function Side() {
 
       {isSubmitted && (
         <>
-          <Grades />
+          {practice.grade && <Grades grade={practice.grade} />}
           <div className="w-full px-4 h-[1px] bg-[#E6E6E6]" />
         </>
       )}
@@ -101,21 +102,23 @@ function Side() {
   );
 }
 
-function Grades({}) {
+function Grades({ grade }: { grade: Grade }) {
   return (
     <div className="flex flex-col gap-2 justify-center w-full">
       <div className="w-full text-center">
         <span className="text-[#595959] text-xl font-semibold">得分：</span>
-        <span className="text-[#1782FF] text-xl font-semibold">100</span>
+        <span className="text-[#1782FF] text-xl font-semibold">
+          {grade.score}
+        </span>
       </div>
       <div className="w-full text-center">
         <div>
           <span className="text-[#595959]  font-semibold">NCLC分数：</span>
-          <span className="text-[#1782FF]  font-semibold">&</span>
+          <span className="text-[#1782FF]  font-semibold">{grade.nclc}</span>
         </div>
         <div>
           <span className="text-[#595959]  font-semibold">CECRL等级：</span>
-          <span className="text-[#1782FF]  font-semibold">B2</span>
+          <span className="text-[#1782FF]  font-semibold">{grade.ceral}</span>
         </div>
       </div>
     </div>

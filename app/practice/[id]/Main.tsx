@@ -3,13 +3,11 @@ import { AlignLeft } from "lucide-react";
 
 import headphone from "@/images/headphone.png";
 import Image from "next/image";
-import { Practice } from "@/shared/schemas/practice";
 import { Subject } from "@/shared/enum";
 
 import { AudioPlayerWrapper } from "@/components/audio-player";
 import { usePractice } from "./context";
 import { notFound } from "next/navigation";
-import { useState } from "react";
 import { cn } from "@/lib/utils";
 function Main() {
   const {
@@ -34,7 +32,7 @@ function Main() {
     clientSideAnswers.find((answer) => answer.questionId === currentQuestion.id)
   );
   return (
-    <>
+    <div className="flex flex-col w-full h-full">
       <div className="text-lg font-semibold flex items-center gap-2 px-3 py-4 bg-white">
         <AlignLeft className="w-4 h-4" />
         Question {currentQuestionIndex + 1} 难度：
@@ -50,7 +48,7 @@ function Main() {
                 blurDataURL={headphone.src}
                 width={0}
                 height={0}
-                className="h-full object-fill"
+                className="h-full"
                 src={headphone.src}
                 alt="listening"
               />
@@ -62,8 +60,10 @@ function Main() {
               blurDataURL={headphone.src}
               width={0}
               height={0}
-              className="h-full object-fill"
-              src={currentQuestion.image}
+              quality={100}
+              sizes="100vh"
+              className="h-full w-auto"
+              src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${currentQuestion.image}`}
               alt="listening"
             />
           )}
@@ -107,7 +107,7 @@ function Main() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

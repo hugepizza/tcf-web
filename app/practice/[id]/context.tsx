@@ -2,6 +2,7 @@
 import { Practice } from "@/shared/schemas/practice";
 import { createContext, useCallback, useContext, useState } from "react";
 import { submitAnswer } from "./actions";
+import { useRouter } from "next/navigation";
 
 interface PracticeContextType {
   practice: Practice;
@@ -17,7 +18,7 @@ interface PracticeContextType {
   isClientSideTimeOut: boolean;
   setClientSideTimeOut: (timeOut: boolean) => void;
   setClientSideReadOnly: (readOnly: boolean) => void;
-  submitPractice: () => void;
+  submitPractice: () => Promise<void>;
 }
 const PracticeContext = createContext<PracticeContextType>({
   practice: {} as Practice,
@@ -33,7 +34,7 @@ const PracticeContext = createContext<PracticeContextType>({
   isClientSideTimeOut: false,
   setClientSideTimeOut: (timeOut: boolean) => {},
   setClientSideReadOnly: (readOnly: boolean) => {},
-  submitPractice: () => {},
+  submitPractice: async () => {},
 });
 
 export default function PracticeProvider({
@@ -43,6 +44,7 @@ export default function PracticeProvider({
   children: React.ReactNode;
   practice: Practice;
 }) {
+  const router = useRouter();
   const isSubmitted = practice.submittedAt !== null;
 
   console.log("isSubmitted", isSubmitted);
@@ -68,6 +70,9 @@ export default function PracticeProvider({
       questionId: clientSideCurrentQuestion,
       submitPractice: true,
     });
+    // 提交后跳转
+    console.log("提交后跳转");
+    router.push(`/practice/${practice.id}`);
   }, [
     clientSideCurrentAnswer,
     clientSideCurrentQuestion,
@@ -138,14 +143,14 @@ export default function PracticeProvider({
         practice,
         clientSideCurrentQuestion,
         clientSideCurrentAnswer,
-        setClientSideCurrentAnswer,
-        nextQuestion,
-        previousQuestion,
-        jumpToQuestion,
         clientSideAnswers,
         isSubmitted,
         isClientSideReadOnly,
         isClientSideTimeOut,
+        setClientSideCurrentAnswer,
+        nextQuestion,
+        previousQuestion,
+        jumpToQuestion,
         setClientSideTimeOut,
         setClientSideReadOnly,
         submitPractice,

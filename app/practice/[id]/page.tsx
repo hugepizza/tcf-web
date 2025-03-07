@@ -1,12 +1,7 @@
-import { AlignLeft } from "lucide-react";
 import Side from "./Side";
 import Action from "./Action";
-import headphone from "@/images/headphone.png";
-import Image from "next/image";
 import { Practice } from "@/shared/schemas/practice";
-import { Subject } from "@/shared/enum";
 import { notFound } from "next/navigation";
-import { AudioPlayerWrapper } from "@/components/audio-player";
 import { apiUrl } from "@/lib/api";
 import Main from "./Main";
 import PracticeProvider from "./context";
