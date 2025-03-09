@@ -13,11 +13,11 @@ export const fetchMutate = async <T = unknown>({
   body: unknown;
   method?: "POST" | "PUT" | "DELETE";
 }) => {
+  const headers = await createHeaders();
   const reponse = await fetch(apiUrl(path), {
     method: method || "POST",
-    headers: await createHeaders(),
+    headers,
     body: JSON.stringify(body),
-    credentials: "include",
   });
 
   if (reponse.status === 401) {
@@ -51,7 +51,6 @@ export const fetchQuery = async <T = unknown>({
   const reponse = await fetch(apiUrl(path), {
     method: "GET",
     headers: await createHeaders(),
-    credentials: "include",
     next: { tags: queryTags },
   });
 

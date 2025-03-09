@@ -42,7 +42,6 @@ export const mutate = async <T = unknown>({
   }
   const jsonDate = await reponse.json();
   const data = jsonDate as Response;
-  console.log("dataaaa", JSON.stringify(data, null, 2));
   if (data.code !== 200) {
     return {
       data: null,

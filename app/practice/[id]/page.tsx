@@ -2,15 +2,19 @@ import Side from "./Side";
 import Action from "./Action";
 import { Practice } from "@/shared/schemas/practice";
 import { notFound } from "next/navigation";
-import { apiUrl } from "@/lib/api";
 import Main from "./Main";
 import PracticeProvider from "./context";
 import HeaderServer from "@/components/Header/Universal";
+import { fetchQuery } from "@/lib/server-fetch";
 
 async function PracticePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const data = await fetch(apiUrl(`/practices/${id}`));
-  const practice = (await data.json()).data as Practice;
+  const data = await fetchQuery<Practice>({ path: `/practices/${id}` });
+  console.log("data", data);
+  if (!data.data) {
+    return notFound();
+  }
+  const practice = data.data;
   const currentQuestion = practice.questions.find(
     (question) => question.id === practice.currentQuestion
   );
