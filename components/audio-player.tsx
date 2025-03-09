@@ -12,6 +12,9 @@ export function AudioPlayerWrapper({ audioUrl }: AudioPlayerProps) {
     <AudioPlayer
       src={audioUrl}
       style={{ borderRadius: "10px", overflow: "hidden" }}
+      autoPlay={true}
+      autoPlayAfterSrcChange={true}
+      progressJumpStep={5}
     />
   );
 }

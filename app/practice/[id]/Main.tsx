@@ -48,9 +48,11 @@ function Main() {
                 blurDataURL={headphone.src}
                 width={0}
                 height={0}
-                className="h-full"
+                quality={100}
+                className="h-full w-auto"
                 src={headphone.src}
                 alt="listening"
+                sizes="100vh"
               />
             )}
           {currentQuestion.image && (
@@ -77,7 +79,9 @@ function Main() {
           )}
           {currentQuestion.audio && (
             <div className="w-full flex justify-center">
-              <AudioPlayerWrapper audioUrl={currentQuestion.audio} />
+              <AudioPlayerWrapper
+                audioUrl={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${currentQuestion.audio}`}
+              />
             </div>
           )}
           {/* 选项*/}
