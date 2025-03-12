@@ -51,8 +51,12 @@ async function ResourcesLayout({
             {subject === Subject.READING.toLocaleLowerCase() ? "阅读" : "听力"}
           </div>
           <div className="w-8" />
-          <NavItem text="按套题分组" path="/resources/by-suit" active={true} />
-          <NavItem text="历史" path="/resources/history" active={false} />
+          <NavItem
+            text="按套题分组"
+            path="/resources/listening/by-suit"
+            active={true}
+          />
+          <NavItem text="历史" path="/resources/me/history" active={false} />
         </div>
       </div>
       {children}

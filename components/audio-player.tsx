@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect } from "react";
 import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   PlayCircleIcon,
   PauseCircleIcon,
@@ -22,7 +22,7 @@ interface AudioPlayerProps {
 export function AudioPlayerWrapper({ audioUrl }: AudioPlayerProps) {
   const playerRef = useRef<any>(null);
   const [playbackRate, setPlaybackRate] = useState<number>(1);
-  
+
   // 当播放速度状态或音频源变化时更新实际的播放速度
   useEffect(() => {
     if (playerRef.current && playerRef.current.audio.current) {
@@ -45,8 +45,8 @@ export function AudioPlayerWrapper({ audioUrl }: AudioPlayerProps) {
         src={audioUrl}
         className="rounded-lg overflow-hidden shadow-none custom-audio-player"
         style={{
-          boxShadow: 'none',
-          background: 'none'
+          boxShadow: "none",
+          background: "none",
         }}
         autoPlay={true}
         autoPlayAfterSrcChange={true}
@@ -56,13 +56,17 @@ export function AudioPlayerWrapper({ audioUrl }: AudioPlayerProps) {
         customIcons={{
           play: <PlayCircleIcon className="w-10 h-10 text-gray-500" />,
           pause: <PauseCircleIcon className="w-10 h-10 text-gray-500" />,
-          loop: <ArrowPathRoundedSquareIcon className="w-6 h-6 text-gray-400" />,
-          loopOff: <ArrowPathRoundedSquareIcon className="w-6 h-6 text-gray-400 opacity-50" />,
+          loop: (
+            <ArrowPathRoundedSquareIcon className="w-6 h-6 text-gray-400" />
+          ),
+          loopOff: (
+            <ArrowPathRoundedSquareIcon className="w-6 h-6 text-gray-400 opacity-50" />
+          ),
           volume: <SpeakerWaveIcon className="w-6 h-6 text-gray-400" />,
           volumeMute: <SpeakerXMarkIcon className="w-6 h-6 text-gray-400" />,
         }}
       />
-      
+
       <div className="flex justify-center p-1">
         <Tabs
           value={playbackRate.toString()}
