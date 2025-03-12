@@ -1,0 +1,73 @@
+/* audio-player-styles.css */
+
+/* 简约风格进度条 */
+.custom-audio-player .rhap_progress-bar {
+    background-color: #e5e5e5; /* 非常浅的灰色背景 */
+    border-radius: 2px;
+    height: 4px; /* 更纤细的高度 */
+  }
+  
+  .custom-audio-player .rhap_progress-indicator {
+    background-color: #666666; /* 深灰色指示器 */
+    width: 10px;
+    height: 10px;
+    margin-left: -5px;
+    top: -3px;
+    box-shadow: none; /* 移除阴影 */
+  }
+  
+  .custom-audio-player .rhap_progress-filled {
+    background-color: #808080; /* 中灰色已播放区域 */
+    border-radius: 2px;
+  }
+  
+  .custom-audio-player .rhap_download-progress {
+    background-color: #d0d0d0; /* 非常浅的灰色下载进度 */
+    border-radius: 2px;
+  }
+  
+  /* 简化音量控制条 */
+  .custom-audio-player .rhap_volume-bar {
+    background-color: #e5e5e5;
+    border-radius: 2px;
+    height: 4px;
+  }
+  
+  .custom-audio-player .rhap_volume-indicator {
+    background-color: #666666;
+    width: 10px;
+    height: 10px;
+    margin-left: -5px;
+    top: -3px;
+    box-shadow: none;
+  }
+  
+  .custom-audio-player .rhap_volume-filled {
+    background-color: #808080;
+    border-radius: 2px;
+  }
+  
+  /* 增加时间显示的间距，模拟截图效果 */
+  .custom-audio-player .rhap_time {
+    font-size: 14px;
+    color: #666666;
+  }
+  
+  /* 简化播放控件 */
+  .custom-audio-player .rhap_main-controls-button,
+  .custom-audio-player .rhap_volume-button,
+  .custom-audio-player .rhap_additional-controls button {
+    color: #666666;
+  }
+  
+  /* 确保没有多余的阴影和边框 */
+  .custom-audio-player.rhap_container {
+    box-shadow: none;
+    padding: 10px 15px;
+    background-color: transparent;
+  }
+  
+  /* 调整整体布局，让时间和进度条有更多间距 */
+  .custom-audio-player .rhap_progress-container {
+    margin: 0 15px;
+  }
