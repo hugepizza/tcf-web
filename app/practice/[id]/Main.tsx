@@ -52,7 +52,7 @@ function Main() {
                 className="h-full w-auto"
                 src={headphone.src}
                 alt="listening"
-                sizes="100vh"
+                sizes="10vh"
               />
             )}
           {currentQuestion.image && (

@@ -12,26 +12,23 @@ import {
   PaginationPrevious,
 } from "@/components/ui/pagination";
 
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { Table, TableBody } from "@/components/ui/table";
 
 async function ResourcesPage({
   params,
   searchParams,
 }: {
-  params: Promise<{ by: string; subject: string }>;
+  params: Promise<{ subject: string }>;
   searchParams: Promise<{ page?: string }>;
 }) {
-  const { by, subject } = await params;
+  const { subject } = await params;
   const { page } = await searchParams;
   const currentPage = page ? parseInt(page) : 1;
   const itemsPerPage = 10;
 
-  if (by !== "by-suit") {
-    notFound();
-  }
   const response = await fetch(
     apiUrl(
-      `/resources/${by}?subject=${subject.toUpperCase()}&page=${currentPage}&pageSize=${itemsPerPage}`
+      `/resources/by-suit?subject=${subject.toUpperCase()}&page=${currentPage}&pageSize=${itemsPerPage}`
     )
   );
   const data = (await response.json()) as {

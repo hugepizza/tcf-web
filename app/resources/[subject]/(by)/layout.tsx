@@ -52,6 +52,7 @@ async function ResourcesLayout({
           </div>
           <div className="w-8" />
           <NavItem text="按套题分组" path="/resources/by-suit" active={true} />
+          <NavItem text="历史" path="/resources/history" active={false} />
         </div>
       </div>
       {children}
