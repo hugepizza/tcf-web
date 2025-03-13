@@ -28,6 +28,9 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import HeaderServer from "@/components/Header/Universal";
+import { deletePractice } from "./actions";
+import { DeleteAll } from "./Delete";
 async function ResourcesPage({
   params,
   searchParams,
@@ -102,7 +105,11 @@ async function ResourcesPage({
 
   return (
     <>
-      <div className="grow overflow-y-scroll px-4 sm:px-10 py-2 gap-4">
+      <HeaderServer />
+      <div className="grow overflow-y-scroll px-4 sm:px-16 py-2 gap-4">
+        <div className="h-8" />
+        <div className="text-4xl font-bold">答题历史</div>
+        <div className="h-8" />
         <div className="flex flex-row gap-2 justify-between">
           <Tabs defaultValue="all">
             <TabsList>
@@ -115,26 +122,7 @@ async function ResourcesPage({
             </TabsList>
           </Tabs>
 
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button variant="destructive" size="sm">
-                删除全部记录
-                <Trash className="w-4 h-4" />
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle>确定要删除全部记录吗？</AlertDialogTitle>
-                <AlertDialogDescription>
-                  此操作无法撤销。这将永久删除您的所有记录。
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel>取消</AlertDialogCancel>
-                <AlertDialogAction>继续</AlertDialogAction>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+          <DeleteAll />
         </div>
         <Table className="bg-white grow">
           <TableBody>

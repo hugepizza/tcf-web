@@ -17,6 +17,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
+import { checkPoint } from "./actions";
+import { useRouter } from "next/navigation";
 
 function Action() {
   const {
@@ -32,9 +34,7 @@ function Action() {
   } = usePractice();
 
   const [remainingSeconds, setRemainingSeconds] = useState(() => {
-    const initRemainingSeconds = dayjs(practice.createdAt)
-      .add(practice.duration, "seconds")
-      .diff(dayjs(), "seconds");
+    const initRemainingSeconds = practice.duration - practice.durationConsumed;
     return Math.max(initRemainingSeconds, 0);
   });
   useEffect(() => {
@@ -54,6 +54,10 @@ function Action() {
   useEffect(() => {
     if (isClientSideTimeOut) return;
     const interval = setInterval(() => {
+      checkPoint({
+        practiceId: practice.id,
+        duration: 1,
+      }).catch(() => {});
       setRemainingSeconds((prev) => {
         if (prev <= 0) {
           clearInterval(interval);
@@ -203,6 +207,7 @@ function SubmitButton({
   submitPractice: () => Promise<void>;
 }) {
   const { toast } = useToast();
+  const router = useRouter();
   if (isSubmitted) return null;
   if (!isClientSideTimeOut && !isLastQuestion) return null;
   return (

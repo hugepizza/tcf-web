@@ -61,7 +61,7 @@ export default function PracticeProvider({
   >(practice.answers);
 
   const submitPractice = useCallback(async () => {
-    if (isClientSideReadOnly) {
+    if (practice.submittedAt) {
       return;
     }
     await submitAnswer({

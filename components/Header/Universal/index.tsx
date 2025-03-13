@@ -38,7 +38,7 @@ async function HeaderServer() {
       <div className="hidden sm:flex flex-row space-x-2 h-8 items-center  sm:px-2">
         {authed ? (
           <>
-            <NavItem text="做题记录" path="/resources/me/history" active={false} />
+            <NavItem text="做题记录" path="/history" active={false} />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button

@@ -23,4 +23,20 @@ const submitAnswer = async ({
   });
 };
 
-export { submitAnswer };
+const checkPoint = async ({
+  practiceId,
+  duration,
+}: {
+  practiceId: string;
+  duration: number;
+}) => {
+  await fetchMutate<{ duration: number }>({
+    path: `/practices/${practiceId}/check-point`,
+    method: "PATCH",
+    body: {
+      duration,
+    },
+  });
+};
+
+export { submitAnswer, checkPoint };

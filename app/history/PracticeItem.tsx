@@ -2,6 +2,7 @@
 import { TableCell, TableRow } from "@/components/ui/table";
 import dayjs from "dayjs";
 import Link from "next/link";
+import { DeleteOne } from "./Delete";
 
 function PracticeItem({
   score,
@@ -27,7 +28,7 @@ function PracticeItem({
           </div>
           <div>{suiteName}</div>
         </div>
-        <div className="flex flex-row gap-[10px]">
+        <div className="flex flex-row gap-[10px] items-center">
           <div>{dayjs(date).format("YYYY-MM-DD")}</div>
           {score ? (
             <div>{score}</div>
@@ -36,6 +37,7 @@ function PracticeItem({
               <div>继续答题</div>
             </Link>
           )}
+          <DeleteOne practiceId={practiceId} />
         </div>
       </TableCell>
     </TableRow>

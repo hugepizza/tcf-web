@@ -38,6 +38,7 @@ export const practiceSchema = z.object({
     })
   ),
   grade: gradeSchema.nullable(),
+  durationConsumed: z.number(),
 });
 
 export const listPracticeItemSchema = practiceSchema.omit({

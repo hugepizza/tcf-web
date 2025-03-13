@@ -11,7 +11,7 @@ export const fetchMutate = async <T = unknown>({
 }: {
   path: string;
   body: unknown;
-  method?: "POST" | "PUT" | "DELETE";
+  method?: "POST" | "PUT" | "DELETE" | "PATCH";
 }) => {
   const headers = await createHeaders();
   const reponse = await fetch(apiUrl(path), {
