@@ -18,13 +18,13 @@ async function HeaderServer() {
   const session = await getServerSession(authConfig);
   const authed = session ? true : false;
   return (
-    <div className="flex flex-row justify-between items-center h-[var(--header-height)] py-1 sm:px-6 px-2 border-b-[1px] z-[50]">
-      <div className="w-[17%] flex items-center justify-start">
+    <div className="flex items-center justify-between gap-3 overflow-x-auto border-b bg-gray-100 py-2 pl-2 pr-4 md:pl-3.5 md:pr-5">
+      <div className="w-[15%] flex items-center justify-start">
         <Link className="" href={"/"}>
           <img
-            src="/tcf-logo.png"
+            src="/ai-logo.png"
             alt="TCF"
-            className="h-6 w-auto object-contain"
+            className="h-8 w-auto object-contain"
           />
         </Link>
       </div>
@@ -35,10 +35,10 @@ async function HeaderServer() {
           active={true}
         />
       </div>
-      <div className="hidden sm:flex flex-row space-x-2 h-[52px] items-center  sm:px-2">
+      <div className="hidden sm:flex flex-row space-x-2 h-8 items-center  sm:px-2">
         {authed ? (
           <>
-            <NavItem text="做题记录" path="/history" active={false} />
+            <NavItem text="做题记录" path="/resources/me/history" active={false} />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button

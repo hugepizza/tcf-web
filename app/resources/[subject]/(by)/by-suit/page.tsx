@@ -86,13 +86,16 @@ async function ResourcesPage({
   return (
     <>
       <div className="grow overflow-y-scroll sm:px-10 py-2">
-        <Table className="bg-white grow">
-          <TableBody>
-            {data.data.items.map((item, index) => (
-              <SuitItem key={item.id} suit={item} index={index + 1} />
-            ))}
-          </TableBody>
-        </Table>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {data.data.items.map((item, index) => (
+            <SuitItem 
+              key={item.id} 
+              suit={item} 
+              index={index + 1} 
+              subject={subject.toUpperCase()} 
+            />
+          ))}
+        </div>
       </div>
 
       <div className="w-full px-4 py-2">

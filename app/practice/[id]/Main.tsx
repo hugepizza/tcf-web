@@ -170,7 +170,7 @@ function Option({
           "font-semibold w-8 h-8 rounded-full flex items-center justify-center text-[#8C8C8C] bg-[#F2F2F2] text-sm"
         )}
       >
-        {index === 0 ? "A" : index === 2 ? "B" : index === 3 ? "C" : "D"}
+        {String.fromCharCode(65 + index)}
       </div>
       <div className="text-sm flex items-center justify-start text-[#595959]">
         {content}

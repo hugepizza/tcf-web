@@ -27,38 +27,33 @@ function NavItem({ text, path, active, subMenu }: NavItemProps) {
 
   return (
     <div
-      className="px-4 h-full items-center sm:flex hidden py-2 box-border group relative"
+      className="px-1 h-full items-center sm:flex hidden relative"
       onMouseEnter={() => setShowDropdown(true)}
       onMouseLeave={() => setShowDropdown(false)}
     >
       {path ? (
-        <Link
-          href={path}
+        <button
+          onClick={() => window.location.href = path}
           className={twMerge(
-            "h-full flex items-center relative justify-center",
+            "px-4 py-2 text-sm transition-colors duration-300 rounded-lg",
             isActive
-              ? "font-semibold"
-              : "hover:font-semibold transition-all duration-200"
+              ? "bg-zinc-100 text-black dark:bg-zinc-800 dark:text-white"
+              : "text-zinc-600 hover:bg-zinc-50 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-50"
           )}
         >
           {text}
-          <div
-            className={twMerge(
-              "absolute bottom-0 w-0 h-[4px] rounded-full bg-primary justify-center transition-all duration-200",
-              isActive ? "w-1/2" : "group-hover:w-1/2"
-            )}
-          />
-        </Link>
+        </button>
       ) : (
-        <div className="h-full flex items-center relative justify-center hover:font-semibold transition-all duration-200">
+        <button
+          className={twMerge(
+            "px-4 py-2 text-sm transition-colors duration-300 rounded-lg",
+            isActive
+              ? "bg-zinc-100 text-black dark:bg-zinc-800 dark:text-white"
+              : "text-zinc-600 hover:bg-zinc-50 hover:text-zinc-950 dark:text-zinc-400 dark:hover:bg-zinc-800/50 dark:hover:text-zinc-50"
+          )}
+        >
           {text}
-          <div
-            className={twMerge(
-              "absolute bottom-0 w-0 h-[4px] rounded-full bg-primary justify-center transition-all duration-200",
-              "group-hover:w-1/2"
-            )}
-          />
-        </div>
+        </button>
       )}
 
       {/* Dropdown Menu */}
@@ -77,7 +72,12 @@ function NavItem({ text, path, active, subMenu }: NavItemProps) {
                   <Link
                     key={item.sort}
                     href={item.link}
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-zinc-700"
+                    className={twMerge(
+                      "block px-4 py-2 text-sm transition-colors duration-200",
+                      pathname === item.link
+                        ? "text-red-500 bg-red-50 dark:bg-red-900/20 dark:text-red-400"
+                        : "text-gray-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:bg-zinc-700/50"
+                    )}
                   >
                     {item.title}
                   </Link>

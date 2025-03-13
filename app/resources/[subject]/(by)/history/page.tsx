@@ -102,7 +102,7 @@ async function ResourcesPage({
 
   return (
     <>
-      <div className="grow overflow-y-scroll sm:px-10 py-2 gap-4">
+      <div className="grow overflow-y-scroll px-4 sm:px-10 py-2 gap-4">
         <div className="flex flex-row gap-2 justify-between">
           <Tabs defaultValue="all">
             <TabsList>
