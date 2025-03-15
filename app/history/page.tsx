@@ -122,7 +122,7 @@ async function ResourcesPage({
             </TabsList>
           </Tabs>
 
-          <DeleteAll />
+          <DeleteAll disabled={data.data.items.length === 0} />
         </div>
         <Table className="bg-white grow">
           <TableBody>

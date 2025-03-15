@@ -13,14 +13,12 @@ import {
 import { deletePractice } from "./actions";
 import { Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 
-export function DeleteAll() {
-  const router = useRouter();
+export function DeleteAll({ disabled }: { disabled: boolean }) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="destructive" size="sm">
+        <Button variant="destructive" size="sm" disabled={disabled}>
           删除全部记录
           <Trash className="w-4 h-4" />
         </Button>
@@ -37,7 +35,6 @@ export function DeleteAll() {
           <AlertDialogAction
             onClick={async () => {
               await deletePractice("all");
-              router.refresh();
             }}
           >
             继续
@@ -49,14 +46,12 @@ export function DeleteAll() {
 }
 
 export function DeleteOne({ practiceId }: { practiceId: string }) {
-  const router = useRouter();
   return (
     <Trash
       className="w-4 h-4"
       onClick={async (e) => {
         e.stopPropagation();
         await deletePractice(practiceId);
-        router.refresh();
       }}
     />
   );

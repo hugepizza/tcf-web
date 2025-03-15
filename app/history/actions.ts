@@ -1,4 +1,6 @@
+"use server";
 import { fetchMutate } from "@/lib/server-fetch";
+import { revalidatePath } from "next/cache";
 
 export const deletePractice = async (id: string) => {
   await fetchMutate({
@@ -6,4 +8,5 @@ export const deletePractice = async (id: string) => {
     method: "DELETE",
     body: {},
   });
+  revalidatePath("/history");
 };
