@@ -16,3 +16,5 @@ export const forwardCloudflareHeaders = (headers: ReadonlyHeaders) => {
     { key: "client-cf-ipcity", value: city },
   ];
 };
+export const assetUrl = (path: string) =>
+  `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${path}`;

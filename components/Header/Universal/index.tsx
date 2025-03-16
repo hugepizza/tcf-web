@@ -34,6 +34,7 @@ async function HeaderServer() {
           path="/resources/listening/by-suit"
           active={true}
         />
+        <NavItem text="备考攻略" path="/blog" active={true} />
       </div>
       <div className="hidden sm:flex flex-row space-x-2 h-8 items-center  sm:px-2">
         {authed ? (

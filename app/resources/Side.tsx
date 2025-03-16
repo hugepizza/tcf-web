@@ -1,7 +1,7 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import { BookOpen, HeadphoneOff, Headphones, Home } from "lucide-react";
 import Link from "next/link";
+import Announcement from "../components/CTA/Announcement";
 
 function Side() {
   return (
@@ -10,7 +10,6 @@ function Side() {
         <Button
           variant="outline"
           className="w-full border-[#FF2442] text-[#FF2442] hover:bg-[#FF2442] hover:text-white"
-          onClick={() => {}}
         >
           <Home className="w-4 h-4" />
           首页
@@ -33,6 +32,7 @@ function Side() {
         阅读
       </Link>
       <div className="h-[1px] w-full bg-[#F2F2F2]" />
+      <Announcement />
     </div>
   );
 }
