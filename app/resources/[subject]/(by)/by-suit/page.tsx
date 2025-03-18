@@ -1,5 +1,5 @@
 import { apiUrl } from "@/lib/api";
-import { notFound } from "next/navigation";
+
 import SuitItem from "./SuitItem";
 
 import {
@@ -11,8 +11,6 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-
-import { Table, TableBody } from "@/components/ui/table";
 
 async function ResourcesPage({
   params,
@@ -88,11 +86,11 @@ async function ResourcesPage({
       <div className="grow overflow-y-scroll sm:px-10 py-2">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {data.data.items.map((item, index) => (
-            <SuitItem 
-              key={item.id} 
-              suit={item} 
-              index={index + 1} 
-              subject={subject.toUpperCase()} 
+            <SuitItem
+              key={item.id}
+              suit={item}
+              index={index + 1}
+              subject={subject.toUpperCase()}
             />
           ))}
         </div>
