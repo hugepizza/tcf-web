@@ -4,6 +4,13 @@ import { dateStringSchema } from "./base-schema";
 
 export type Practice = z.infer<typeof practiceSchema>;
 
+export const imageContentSchema = z.object({
+  original_text: z.string().optional().default(""),
+  translation: z.string().optional().default(""),
+  questions: z.string().optional().default(""),
+  original_text_translation: z.string().optional().default(""),
+});
+
 export const gradeSchema = z.object({
   score: z.number(),
   nclc: z.string(),
@@ -31,6 +38,7 @@ export const practiceSchema = z.object({
       stem: z.string(),
       options: z.array(z.string()),
       image: z.string().optional(),
+      imageContent: imageContentSchema.optional(),
       audio: z.string().optional(),
       caption: z.string().optional(),
       difficulty: z.nativeEnum(QuestionDifficulty),

@@ -16,7 +16,7 @@ function Side() {
   } = usePractice();
   const { back } = useRouter();
   return (
-    <div className="sm:w-[236px] w-full  flex flex-col gap-2 pt-[15px]  pb-2 px-3 border-[#F2F2F2] border-[1px]">
+    <>
       <div>
         <Button
           variant="outline"
@@ -98,7 +98,7 @@ function Side() {
           </div>
         ))}
       </div>
-    </div>
+    </>
   );
 }
 

@@ -12,6 +12,7 @@ import { usePractice } from "./context";
 import { notFound } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { AudioPlayerWithSubtitles } from "@/components/audio-player-with-subtitles";
+import { Practice } from "@/shared/schemas/practice";
 function Main() {
   const {
     practice,
@@ -44,35 +45,8 @@ function Main() {
         </div>
         <div className="grow flex flex-col">
           <div className="p-3 flex justify-center grow">
-            {currentQuestion.subject === Subject.LISTENING &&
-              !currentQuestion.image && (
-                <Image
-                  loading="eager"
-                  placeholder="blur"
-                  blurDataURL={headphone.src}
-                  width={0}
-                  height={0}
-                  quality={100}
-                  className="max-h-80 w-auto rounded-lg"
-                  src={headphone.src}
-                  alt="listening"
-                  sizes="10vh"
-                />
-              )}
-            {currentQuestion.image && (
-              <Image
-                loading="eager"
-                placeholder="blur"
-                blurDataURL={headphone.src}
-                width={0}
-                height={0}
-                quality={100}
-                sizes="100vh"
-                className="max-h-80 w-full rounded-lg object-contain"
-                src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${currentQuestion.image}`}
-                alt="listening"
-              />
-            )}
+            <ListeningImageContent question={currentQuestion} />
+            <ReadingImageContent question={currentQuestion} />
           </div>
           <div className="bg-white mx-2 rounded-md p-6 flex flex-col items-center gap-4">
             {/* 题干*/}
@@ -92,8 +66,8 @@ function Main() {
                   userAnswer={
                     isSubmitted
                       ? clientSideAnswers.find(
-                        (answer) => answer.questionId === currentQuestion.id
-                      )?.answer ?? ""
+                          (answer) => answer.questionId === currentQuestion.id
+                        )?.answer ?? ""
                       : clientSideCurrentAnswer
                   }
                   answerKey={
@@ -130,9 +104,7 @@ function Main() {
             />
           </div>
         ) : (
-          <div className="text-gray-400 text-sm text-center py-4">
-            
-          </div>
+          <div className="text-gray-400 text-sm text-center py-4"></div>
         )}
       </div>
     </div>
@@ -176,9 +148,9 @@ function Option({
       className={cn(
         "w-full bg-[#FAFAFA] rounded-md px-3 py-2 flex gap-2 outline outline-[2px] outline-[#FAFAFA] cursor-pointer duration-150",
         !isSubmitted &&
-        (userAnswer === index.toString()
-          ? "bg-[#E5F7EA]  outline-[#18A058]"
-          : "hover:bg-[#E5F7EA]"),
+          (userAnswer === index.toString()
+            ? "bg-[#E5F7EA]  outline-[#18A058]"
+            : "hover:bg-[#E5F7EA]"),
         isSubmitted && isClientSideCorrect && "bg-[#E5F7EA]  outline-[#18A058]",
         isSubmitted && isClientSideWrong && "bg-[#FFE5E5]  outline-[#FF2442]"
       )}
@@ -203,4 +175,70 @@ function Option({
   );
 }
 
+function ListeningImageContent({
+  question,
+}: {
+  question: Practice["questions"][number];
+}) {
+  if (question.subject !== Subject.LISTENING) {
+    return null;
+  }
+  if (!question.image) {
+    return null;
+  }
+  return (
+    <Image
+      loading="eager"
+      placeholder="blur"
+      blurDataURL={headphone.src}
+      width={0}
+      height={0}
+      quality={100}
+      className="h-full w-auto"
+      src={headphone.src}
+      alt="listening"
+      sizes="10vh"
+    />
+  );
+}
+
+function ReadingImageContent({
+  question,
+}: {
+  question: Practice["questions"][number];
+}) {
+  const showText =
+    question.imageContent &&
+    question.imageContent.original_text &&
+    question.imageContent.questions;
+  if (question.subject !== Subject.READING) {
+    return null;
+  }
+  if (showText) {
+    return (
+      <div className="whitespace-pre-line w-full h-full p-12 overflow-auto text-[#595959] text-center flex flex-col items-center">
+        <div className="text-xl font-semibold max-w-full break-words">
+          {question.imageContent?.original_text}
+        </div>
+        <div className="text-lg max-w-full break-words">
+          {question.imageContent?.questions}
+        </div>
+      </div>
+    );
+  }
+  return (
+    <Image
+      loading="eager"
+      placeholder="blur"
+      blurDataURL={headphone.src}
+      width={0}
+      height={0}
+      quality={100}
+      sizes="100vh"
+      className="h-full w-auto"
+      src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${question.image}`}
+      alt="listening"
+    />
+  );
+}
 export default Main;
