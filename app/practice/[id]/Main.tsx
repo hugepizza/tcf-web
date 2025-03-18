@@ -1,5 +1,5 @@
 "use client";
-import { AlignLeft } from "lucide-react";
+import { AlignLeft, Languages } from "lucide-react";
 import { Listening } from "@/components/icons/listening";
 import { SparklesSoft } from "@/components/icons/sparkles-soft";
 
@@ -35,6 +35,7 @@ function Main() {
   console.log(
     clientSideAnswers.find((answer) => answer.questionId === currentQuestion.id)
   );
+  console.log("currentQuestion.imageContent", currentQuestion.imageContent);
   return (
     <div className="flex w-full h-full flex-col lg:flex-row">
       <div className="flex flex-col flex-1">
@@ -88,7 +89,7 @@ function Main() {
           <SparklesSoft className="w-6 h-6" />
           智能辅助
         </div>
-        {currentQuestion.audio ? (
+        {currentQuestion.audio && (
           <div className="bg-gray-50 rounded-lg p-1 m-2">
             <div className="text-sm h-8 font-medium text-gray-500 flex items-center gap-1 px-2">
               <Listening className="w-4 h-4" />
@@ -103,9 +104,24 @@ function Main() {
               }
             />
           </div>
-        ) : (
-          <div className="text-gray-400 text-sm text-center py-4"></div>
         )}
+
+        {currentQuestion.imageContent?.original_text_translation &&
+          currentQuestion.imageContent?.questions_translation && (
+            <div className="bg-gray-50 rounded-lg p-1 m-2">
+              <div className="text-sm h-8 font-medium text-gray-500 flex items-center gap-1 px-2">
+                <Languages className="w-4 h-4" />
+                阅读翻译
+              </div>
+              <div className="text-sm text-gray-500">
+                {currentQuestion.imageContent?.original_text_translation}
+              </div>
+
+              <div className="text-sm text-gray-500">
+                {currentQuestion.imageContent?.questions_translation}
+              </div>
+            </div>
+          )}
       </div>
     </div>
   );

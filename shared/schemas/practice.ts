@@ -6,7 +6,7 @@ export type Practice = z.infer<typeof practiceSchema>;
 
 export const imageContentSchema = z.object({
   original_text: z.string().optional().default(""),
-  translation: z.string().optional().default(""),
+  questions_translation: z.string().optional().default(""),
   questions: z.string().optional().default(""),
   original_text_translation: z.string().optional().default(""),
 });
