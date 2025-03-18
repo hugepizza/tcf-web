@@ -1,5 +1,7 @@
 "use client";
 import { AlignLeft } from "lucide-react";
+import { Listening } from "@/components/icons/listening";
+import { SparklesSoft } from "@/components/icons/sparkles-soft";
 
 import headphone from "@/images/headphone.png";
 import Image from "next/image";
@@ -9,7 +11,7 @@ import { AudioPlayerWrapper } from "@/components/audio-player";
 import { usePractice } from "./context";
 import { notFound } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { AudioPlayerWithSubtitles } from "@/app/test/audio-player";
+import { AudioPlayerWithSubtitles } from "@/components/audio-player-with-subtitles";
 function Main() {
   const {
     practice,
@@ -33,16 +35,31 @@ function Main() {
     clientSideAnswers.find((answer) => answer.questionId === currentQuestion.id)
   );
   return (
-    <div className="flex flex-col w-full h-full">
-      <div className="text-lg font-semibold flex items-center gap-2 px-3 py-4 bg-white">
-        <AlignLeft className="w-4 h-4" />
-        Question {currentQuestionIndex + 1} 难度：
-        {currentQuestion.difficulty}（{currentQuestion.score}分）
-      </div>
-      <div className="grow flex flex-col">
-        <div className="p-3 flex justify-center grow">
-          {currentQuestion.subject === Subject.LISTENING &&
-            !currentQuestion.image && (
+    <div className="flex w-full h-full flex-col lg:flex-row">
+      <div className="flex flex-col flex-1">
+        <div className="text-lg font-semibold flex items-center gap-2 px-3 py-4 bg-white">
+          <AlignLeft className="w-4 h-4" />
+          Question {currentQuestionIndex + 1} 难度：
+          {currentQuestion.difficulty}（{currentQuestion.score}分）
+        </div>
+        <div className="grow flex flex-col">
+          <div className="p-3 flex justify-center grow">
+            {currentQuestion.subject === Subject.LISTENING &&
+              !currentQuestion.image && (
+                <Image
+                  loading="eager"
+                  placeholder="blur"
+                  blurDataURL={headphone.src}
+                  width={0}
+                  height={0}
+                  quality={100}
+                  className="max-h-80 w-auto rounded-lg"
+                  src={headphone.src}
+                  alt="listening"
+                  sizes="10vh"
+                />
+              )}
+            {currentQuestion.image && (
               <Image
                 loading="eager"
                 placeholder="blur"
@@ -50,72 +67,73 @@ function Main() {
                 width={0}
                 height={0}
                 quality={100}
-                className="h-full w-auto"
-                src={headphone.src}
+                sizes="100vh"
+                className="max-h-80 w-full rounded-lg object-contain"
+                src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${currentQuestion.image}`}
                 alt="listening"
-                sizes="10vh"
               />
             )}
-          {currentQuestion.image && (
-            <Image
-              loading="eager"
-              placeholder="blur"
-              blurDataURL={headphone.src}
-              width={0}
-              height={0}
-              quality={100}
-              sizes="100vh"
-              className="h-full w-auto"
-              src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${currentQuestion.image}`}
-              alt="listening"
-            />
-          )}
-        </div>
-        <div className="bg-white mx-2 rounded-md p-6 flex flex-col items-center gap-4">
-          {/* 题干*/}
-          {currentQuestion.stem && (
-            <div className="font-semibold text-[#434343] text-lg">
-              {currentQuestion.stem}
-            </div>
-          )}
-          {currentQuestion.audio && (
-            <div className="w-full flex justify-center">
-              <AudioPlayerWithSubtitles
-                audioUrl={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${currentQuestion.audio}`}
-                subtitleUrl={
-                  currentQuestion.caption
-                    ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${currentQuestion.caption}`
-                    : undefined
-                }
-              />
-            </div>
-          )}
-          {/* 选项*/}
-          <div className="w-full flex flex-col gap-2">
-            {currentQuestion.options.map((option, index) => (
-              <Option
-                key={index}
-                index={index}
-                content={option}
-                isSubmitted={isSubmitted}
-                userAnswer={
-                  isSubmitted
-                    ? clientSideAnswers.find(
+          </div>
+          <div className="bg-white mx-2 rounded-md p-6 flex flex-col items-center gap-4">
+            {/* 题干*/}
+            {currentQuestion.stem && (
+              <div className="font-semibold text-[#434343] text-lg">
+                {currentQuestion.stem}
+              </div>
+            )}
+            {/* 选项*/}
+            <div className="w-full flex flex-col gap-2">
+              {currentQuestion.options.map((option, index) => (
+                <Option
+                  key={index}
+                  index={index}
+                  content={option}
+                  isSubmitted={isSubmitted}
+                  userAnswer={
+                    isSubmitted
+                      ? clientSideAnswers.find(
                         (answer) => answer.questionId === currentQuestion.id
                       )?.answer ?? ""
-                    : clientSideCurrentAnswer
-                }
-                answerKey={
-                  clientSideAnswers.find(
-                    (answer) => answer.questionId === currentQuestion.id
-                  )?.answerKey ?? "x"
-                }
-                readOnly={isClientSideReadOnly}
-                setUserAnswer={setClientSideCurrentAnswer}
-              />
-            ))}
+                      : clientSideCurrentAnswer
+                  }
+                  answerKey={
+                    clientSideAnswers.find(
+                      (answer) => answer.questionId === currentQuestion.id
+                    )?.answerKey ?? "x"
+                  }
+                  readOnly={isClientSideReadOnly}
+                  setUserAnswer={setClientSideCurrentAnswer}
+                />
+              ))}
+            </div>
           </div>
         </div>
+      </div>
+      <div className="lg:max-w-[400px] w-full lg:border-l">
+        <div className="text-normal font-medium p-4 h-14 border-b border-gray-100 bg-clip-text text-transparent bg-gradient-to-r from-[#FF2442] to-[#FF6F7F] flex items-center gap-2">
+          <SparklesSoft className="w-6 h-6" />
+          智能辅助
+        </div>
+        {currentQuestion.audio ? (
+          <div className="bg-gray-50 rounded-lg p-1 m-2">
+            <div className="text-sm h-8 font-medium text-gray-500 flex items-center gap-1 px-2">
+              <Listening className="w-4 h-4" />
+              听力音频
+            </div>
+            <AudioPlayerWithSubtitles
+              audioUrl={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${currentQuestion.audio}`}
+              subtitleUrl={
+                currentQuestion.caption
+                  ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${currentQuestion.caption}`
+                  : undefined
+              }
+            />
+          </div>
+        ) : (
+          <div className="text-gray-400 text-sm text-center py-4">
+            
+          </div>
+        )}
       </div>
     </div>
   );
@@ -158,9 +176,9 @@ function Option({
       className={cn(
         "w-full bg-[#FAFAFA] rounded-md px-3 py-2 flex gap-2 outline outline-[2px] outline-[#FAFAFA] cursor-pointer duration-150",
         !isSubmitted &&
-          (userAnswer === index.toString()
-            ? "bg-[#E5F7EA]  outline-[#18A058]"
-            : "hover:bg-[#E5F7EA]"),
+        (userAnswer === index.toString()
+          ? "bg-[#E5F7EA]  outline-[#18A058]"
+          : "hover:bg-[#E5F7EA]"),
         isSubmitted && isClientSideCorrect && "bg-[#E5F7EA]  outline-[#18A058]",
         isSubmitted && isClientSideWrong && "bg-[#FFE5E5]  outline-[#FF2442]"
       )}
