@@ -32,6 +32,7 @@ export const practiceSchema = z.object({
       options: z.array(z.string()),
       image: z.string().optional(),
       audio: z.string().optional(),
+      caption: z.string().optional(),
       difficulty: z.nativeEnum(QuestionDifficulty),
       score: z.number(),
       subject: z.nativeEnum(Subject),

@@ -9,6 +9,7 @@ import { AudioPlayerWrapper } from "@/components/audio-player";
 import { usePractice } from "./context";
 import { notFound } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { AudioPlayerWithSubtitles } from "@/app/test/audio-player";
 function Main() {
   const {
     practice,
@@ -79,8 +80,13 @@ function Main() {
           )}
           {currentQuestion.audio && (
             <div className="w-full flex justify-center">
-              <AudioPlayerWrapper
+              <AudioPlayerWithSubtitles
                 audioUrl={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${currentQuestion.audio}`}
+                subtitleUrl={
+                  currentQuestion.caption
+                    ? `${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${currentQuestion.caption}`
+                    : undefined
+                }
               />
             </div>
           )}

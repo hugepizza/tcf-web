@@ -11,11 +11,14 @@ import {
   SpeakerWaveIcon,
   SpeakerXMarkIcon,
 } from "@heroicons/react/24/solid";
-import { Disclosure, DisclosureTrigger, DisclosureContent } from "@/components/core/disclosure";
+import {
+  Disclosure,
+  DisclosureTrigger,
+  DisclosureContent,
+} from "@/components/core/disclosure";
 import { ChevronUpIcon } from "@heroicons/react/24/solid";
 
 // Custom CSS to override the default styles
-
 
 interface AudioPlayerProps {
   audioUrl: string;
@@ -31,7 +34,10 @@ interface Subtitle {
   timestamp?: string;
 }
 
-export function AudioPlayerWithSubtitles({ audioUrl, subtitleUrl }: AudioPlayerProps) {
+export function AudioPlayerWithSubtitles({
+  audioUrl,
+  subtitleUrl,
+}: AudioPlayerProps) {
   const playerRef = useRef<any>(null);
   const [playbackRate, setPlaybackRate] = useState<number>(1);
   const [currentTime, setCurrentTime] = useState<number>(0);
@@ -41,7 +47,7 @@ export function AudioPlayerWithSubtitles({ audioUrl, subtitleUrl }: AudioPlayerP
   const [mounted, setMounted] = useState<boolean>(false);
   const subtitleContainerRef = useRef<HTMLDivElement>(null);
   const [isSubtitleOpen, setIsSubtitleOpen] = useState(true);
-  
+
   // 客户端挂载检测
   useEffect(() => {
     setMounted(true);
@@ -57,17 +63,17 @@ export function AudioPlayerWithSubtitles({ audioUrl, subtitleUrl }: AudioPlayerP
   // 加载字幕
   useEffect(() => {
     if (!subtitleUrl || !mounted) return;
-    
+
     console.log("加载字幕:", subtitleUrl);
-    
+
     fetch(subtitleUrl)
-      .then(response => {
+      .then((response) => {
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         return response.text();
       })
-      .then(data => {
+      .then((data) => {
         console.log("获取字幕内容长度:", data.length);
         const parsedSubtitles = parseSRT(data);
         console.log(`解析出${parsedSubtitles.length}条字幕`);
@@ -76,7 +82,7 @@ export function AudioPlayerWithSubtitles({ audioUrl, subtitleUrl }: AudioPlayerP
         }
         setSubtitles(parsedSubtitles);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("加载字幕失败:", error);
         setError(`加载字幕失败: ${error.message}`);
       });
@@ -86,13 +92,15 @@ export function AudioPlayerWithSubtitles({ audioUrl, subtitleUrl }: AudioPlayerP
   const parseSRT = (srtContent: string): Subtitle[] => {
     try {
       // 处理不同的换行符格式
-      const normalizedContent = srtContent.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
-      const blocks = normalizedContent.split('\n\n').filter(Boolean);
-      
+      const normalizedContent = srtContent
+        .replace(/\r\n/g, "\n")
+        .replace(/\r/g, "\n");
+      const blocks = normalizedContent.split("\n\n").filter(Boolean);
+
       return blocks
         .map((block, index): Subtitle | null => {
-          const lines = block.split('\n').filter(Boolean);
-          
+          const lines = block.split("\n").filter(Boolean);
+
           // 尝试解析序号
           let id = index + 1;
           try {
@@ -102,59 +110,61 @@ export function AudioPlayerWithSubtitles({ audioUrl, subtitleUrl }: AudioPlayerP
           } catch (e) {
             console.warn("无法解析序号:", lines[0]);
           }
-          
+
           // 查找时间戳行
-          let timestampLine = '';
+          let timestampLine = "";
           let textStartIndex = 0;
-          
+
           for (let i = 0; i < lines.length; i++) {
-            if (lines[i].includes(' --> ')) {
+            if (lines[i].includes(" --> ")) {
               timestampLine = lines[i];
               textStartIndex = i + 1;
               break;
             }
           }
-          
+
           if (!timestampLine) {
             console.error("找不到时间戳:", block);
             return null;
           }
-          
+
           // 解析时间戳
-          const [startTime, endTime] = timestampLine.split(' --> ');
+          const [startTime, endTime] = timestampLine.split(" --> ");
           const start = timeToSeconds(startTime.trim());
           const end = timeToSeconds(endTime.trim());
           const timestamp = formatTimeMMSS(start);
-          
+
           // 获取字幕文本和翻译
           const textLines = lines.slice(textStartIndex);
-          let text = '';
-          let translation = '';
-          
+          let text = "";
+          let translation = "";
+
           // 如果有多行，尝试检测是否为双语字幕
           if (textLines.length >= 2) {
             // 检测第一行是否为非中文，第二行是否为中文
-            const isFirstLineNonChinese = !/[\u4e00-\u9fa5]/.test(textLines[0]) && /[a-zA-Z]/.test(textLines[0]);
+            const isFirstLineNonChinese =
+              !/[\u4e00-\u9fa5]/.test(textLines[0]) &&
+              /[a-zA-Z]/.test(textLines[0]);
             const isSecondLineChinese = /[\u4e00-\u9fa5]/.test(textLines[1]);
-            
+
             if (isFirstLineNonChinese && isSecondLineChinese) {
               text = textLines[0];
               translation = textLines[1];
             } else {
               // 如果不是明确的双语格式，则所有行都视为文本
-              text = textLines.join(' ');
+              text = textLines.join(" ");
             }
           } else if (textLines.length === 1) {
             text = textLines[0];
           }
-          
+
           return {
             id,
             start,
             end,
             text,
             translation: translation || undefined,
-            timestamp: timestamp || undefined
+            timestamp: timestamp || undefined,
           };
         })
         .filter((s): s is Subtitle => s !== null)
@@ -169,25 +179,28 @@ export function AudioPlayerWithSubtitles({ audioUrl, subtitleUrl }: AudioPlayerP
   const timeToSeconds = (timeString: string): number => {
     try {
       // 处理毫秒分隔符 , 或 .
-      const normalizedTime = timeString.replace(',', '.');
-      
-      const parts = normalizedTime.split(':');
+      const normalizedTime = timeString.replace(",", ".");
+
+      const parts = normalizedTime.split(":");
       if (parts.length !== 3) {
         return 0;
       }
-      
+
       const [hours, minutes, secondsAndMs] = parts;
-      let seconds = 0, milliseconds = 0;
-      
-      if (secondsAndMs.includes('.')) {
-        const [secs, ms] = secondsAndMs.split('.');
+      let seconds = 0,
+        milliseconds = 0;
+
+      if (secondsAndMs.includes(".")) {
+        const [secs, ms] = secondsAndMs.split(".");
         seconds = parseInt(secs);
         milliseconds = parseInt(ms) / (ms.length === 3 ? 1000 : 100);
       } else {
         seconds = parseInt(secondsAndMs);
       }
-      
-      return parseInt(hours) * 3600 + parseInt(minutes) * 60 + seconds + milliseconds;
+
+      return (
+        parseInt(hours) * 3600 + parseInt(minutes) * 60 + seconds + milliseconds
+      );
     } catch (error) {
       console.error("解析时间错误:", timeString, error);
       return 0;
@@ -198,26 +211,28 @@ export function AudioPlayerWithSubtitles({ audioUrl, subtitleUrl }: AudioPlayerP
   const formatTimeMMSS = (seconds: number): string => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = Math.floor(seconds % 60);
-    return `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+    return `${minutes.toString().padStart(2, "0")}:${remainingSeconds
+      .toString()
+      .padStart(2, "0")}`;
   };
 
   // 更新当前字幕
   const updateSubtitle = (currentTime: number) => {
     if (!subtitles.length) return;
-    
+
     // 查找当前时间对应的字幕
-    const subtitle = subtitles.find(sub => 
-      currentTime >= sub.start && currentTime <= sub.end
+    const subtitle = subtitles.find(
+      (sub) => currentTime >= sub.start && currentTime <= sub.end
     );
-    
+
     if (subtitle && (!currentSubtitle || subtitle.id !== currentSubtitle.id)) {
       setCurrentSubtitle(subtitle);
-      
+
       // 滚动到当前字幕
       if (subtitleContainerRef.current) {
         const element = document.getElementById(`subtitle-${subtitle.id}`);
         if (element) {
-          element.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          element.scrollIntoView({ behavior: "smooth", block: "center" });
         }
       }
     } else if (!subtitle && currentSubtitle) {
@@ -315,18 +330,18 @@ export function AudioPlayerWithSubtitles({ audioUrl, subtitleUrl }: AudioPlayerP
         </div>
 
         {subtitleUrl && (
-          <div 
+          <div
             onClick={() => setIsSubtitleOpen(!isSubtitleOpen)}
             className={`inline-flex items-center gap-2 text-sm px-4 py-1.5 rounded-full transition-colors duration-200 cursor-pointer ${
-              isSubtitleOpen 
-                ? 'bg-red-600 text-white' 
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+              isSubtitleOpen
+                ? "bg-red-600 text-white"
+                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
             }`}
           >
             <span>精听</span>
-            <ChevronUpIcon 
+            <ChevronUpIcon
               className={`w-4 h-4 transition-transform duration-200 ${
-                isSubtitleOpen ? 'rotate-180' : ''
+                isSubtitleOpen ? "rotate-180" : ""
               }`}
             />
           </div>
@@ -335,12 +350,9 @@ export function AudioPlayerWithSubtitles({ audioUrl, subtitleUrl }: AudioPlayerP
 
       {/* 字幕显示区域 */}
       {subtitleUrl && (
-        <Disclosure 
-          open={isSubtitleOpen} 
-          onOpenChange={setIsSubtitleOpen}
-        >
+        <Disclosure open={isSubtitleOpen} onOpenChange={setIsSubtitleOpen}>
           <DisclosureContent>
-            <div 
+            <div
               ref={subtitleContainerRef}
               className="max-h-[400px] overflow-y-auto px-2 py-2"
             >
@@ -351,28 +363,41 @@ export function AudioPlayerWithSubtitles({ audioUrl, subtitleUrl }: AudioPlayerP
               ) : (
                 <div className="space-y-3">
                   {subtitles.map((subtitle) => (
-                    <div 
-                      key={subtitle.id} 
+                    <div
+                      key={subtitle.id}
                       id={`subtitle-${subtitle.id}`}
                       className={`py-3 px-3 rounded-lg transition-colors duration-200 cursor-pointer hover:bg-gray-50 ${
-                        currentTime >= subtitle.start && currentTime <= subtitle.end 
-                          ? 'bg-orange-50' 
-                          : ''
+                        currentTime >= subtitle.start &&
+                        currentTime <= subtitle.end
+                          ? "bg-orange-50"
+                          : ""
                       }`}
                       onClick={() => jumpToSubtitle(subtitle)}
                     >
-                      <div className="text-gray-400 text-xs mb-1.5">{subtitle.timestamp}</div>
-                      <div className={`text-[15px] leading-relaxed ${
-                        currentTime >= subtitle.start && currentTime <= subtitle.end 
-                          ? 'text-orange-600 font-medium' 
-                          : 'text-gray-700'
-                      }`}>{subtitle.text}</div>
+                      <div className="text-gray-400 text-xs mb-1.5">
+                        {subtitle.timestamp}
+                      </div>
+                      <div
+                        className={`text-[15px] leading-relaxed ${
+                          currentTime >= subtitle.start &&
+                          currentTime <= subtitle.end
+                            ? "text-orange-600 font-medium"
+                            : "text-gray-700"
+                        }`}
+                      >
+                        {subtitle.text}
+                      </div>
                       {subtitle.translation && (
-                        <div className={`text-[14px] mt-1.5 leading-relaxed ${
-                          currentTime >= subtitle.start && currentTime <= subtitle.end 
-                            ? 'text-orange-500' 
-                            : 'text-gray-500'
-                        }`}>{subtitle.translation}</div>
+                        <div
+                          className={`text-[14px] mt-1.5 leading-relaxed ${
+                            currentTime >= subtitle.start &&
+                            currentTime <= subtitle.end
+                              ? "text-orange-500"
+                              : "text-gray-500"
+                          }`}
+                        >
+                          {subtitle.translation}
+                        </div>
                       )}
                     </div>
                   ))}
