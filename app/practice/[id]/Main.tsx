@@ -67,8 +67,8 @@ function Main() {
                   userAnswer={
                     isSubmitted
                       ? clientSideAnswers.find(
-                          (answer) => answer.questionId === currentQuestion.id
-                        )?.answer ?? ""
+                        (answer) => answer.questionId === currentQuestion.id
+                      )?.answer ?? ""
                       : clientSideCurrentAnswer
                   }
                   answerKey={
@@ -113,17 +113,26 @@ function Main() {
                 <Languages className="w-4 h-4" />
                 阅读翻译
               </div>
-              <div className="text-sm text-gray-500">
-                {currentQuestion.imageContent?.original_text_translation}
+              <div className="bg-white rounded-md p-2 border-gray-200 border">
+                <div className="text-sm font-medium text-gray-500 mb-1">
+                  原文：
+                </div>
+                <div className="text-sm text-gray-500 whitespace-pre-line">
+                  {currentQuestion.imageContent?.original_text_translation}
+                </div>
               </div>
-
-              <div className="text-sm text-gray-500">
-                {currentQuestion.imageContent?.questions_translation}
+              <div className="bg-white rounded-md p-2 mt-1 border-gray-200 border">
+                <div className="text-sm font-medium text-gray-500 mb-1">
+                  问题：
+                </div>
+                <div className="text-sm text-gray-500">
+                  {currentQuestion.imageContent?.questions_translation}
+                </div>
               </div>
             </div>
           )}
       </div>
-    </div>
+    </div >
   );
 }
 
@@ -164,9 +173,9 @@ function Option({
       className={cn(
         "w-full bg-[#FAFAFA] rounded-md px-3 py-2 flex gap-2 outline outline-[2px] outline-[#FAFAFA] cursor-pointer duration-150",
         !isSubmitted &&
-          (userAnswer === index.toString()
-            ? "bg-[#E5F7EA]  outline-[#18A058]"
-            : "hover:bg-[#E5F7EA]"),
+        (userAnswer === index.toString()
+          ? "bg-[#E5F7EA]  outline-[#18A058]"
+          : "hover:bg-[#E5F7EA]"),
         isSubmitted && isClientSideCorrect && "bg-[#E5F7EA]  outline-[#18A058]",
         isSubmitted && isClientSideWrong && "bg-[#FFE5E5]  outline-[#FF2442]"
       )}
