@@ -209,20 +209,31 @@ function ListeningImageContent({
     return null;
   }
   if (!question.image) {
-    return null;
+    return (
+      <Image
+        blurDataURL={headphone.src}
+        width={0}
+        height={0}
+        quality={100}
+        className="h-full w-auto"
+        src={headphone.src}
+        alt="listening"
+        sizes="50vh"
+      />
+    );
   }
   return (
     <Image
       loading="eager"
       placeholder="blur"
-      blurDataURL={headphone.src}
+      blurDataURL={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${question.image}`}
       width={0}
       height={0}
       quality={100}
       className="h-full w-auto"
-      src={headphone.src}
+      src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${question.image}`}
       alt="listening"
-      sizes="10vh"
+      sizes="100vh"
     />
   );
 }
