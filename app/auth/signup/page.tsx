@@ -8,8 +8,8 @@ import { twMerge } from "tailwind-merge";
 import { z } from "zod";
 import { sendVerificationCode } from "../login/actions";
 import { signUpInputSchema } from "@/shared/schemas/auth";
-import { fetchMutate } from "@/lib/server-fetch";
 import { useRouter } from "next/navigation";
+import { signup as signupAction } from "./actions";
 
 export default function Signup() {
   const [form, setForm] = useState<z.infer<typeof signUpInputSchema>>({
@@ -26,18 +26,11 @@ export default function Signup() {
       throw v.error;
     }
     try {
-      const { error } = await fetchMutate({
-        path: "/auth/user/sign-up",
-        body: {
-          email: form.email,
-          password: form.password,
-          verificationCode: form.verificationCode,
-          registerCode: form.registerCode,
-        },
-      });
+      const { error } = await signupAction(form);
       if (error) {
         throw error.message;
       }
+      toast.success("注册成功，请登录");
       push("/auth/login");
     } catch (e) {
       throw e;
