@@ -1,0 +1,269 @@
+{
+  "originalText": "Le désintérêt pour la lecture d'un grand nombre d'enfants a plusieurs facteurs d'explication. D'abord, beaucoup d'enfants délaissent la lecture quand ils s'aperçoivent que d'autres élèves sont meilleurs qu'eux. Ensuite, c'est lorsque l'on demande à l'enfant non seulement de déchiffrer mais aussi de comprendre, qu'il lâche prise. Absence de compréhension rime en général avec manque de plaisir. Selon certains psychologues, si les enfants peinent à comprendre, c'est parce qu'ils ont des lacunes de culture générale. Or, celle-ci s'acquiert justement en lisant.\n\nComment sortir de ce cercle vicieux ? Les psychologues conseillent de mettre des livres en évidence à la maison et d'introduire, à l'école, des temps de lecture « plaisir », où chaque enfant peut se plonger dans l'ouvrage de son choix.",
+  "sentences": [
+    {
+      "fullText": "Le désintérêt pour la lecture d'un grand nombre d'enfants a plusieurs facteurs d'explication.",
+      "components": [
+        {
+          "text": "Le désintérêt pour la lecture d'un grand nombre d'enfants",
+          "type": "sujet",
+          "label": "主语",
+          "color": "bg-blue-100",
+          "description": "名词短语，由冠词(Le)、名词(désintérêt)、介词短语(pour la lecture d'un grand nombre d'enfants)组成"
+        },
+        {
+          "text": "a",
+          "type": "verbe",
+          "label": "谓语",
+          "color": "bg-orange-100",
+          "description": "动词avoir的第三人称单数现在时形式"
+        },
+        {
+          "text": "plusieurs facteurs d'explication",
+          "type": "COD",
+          "label": "宾语",
+          "color": "bg-yellow-50",
+          "description": "名词短语，由不定形容词(plusieurs)、名词(facteurs)和介词短语(d'explication)组成"
+        }
+      ]
+    },
+    {
+      "fullText": "D'abord, beaucoup d'enfants délaissent la lecture quand ils s'aperçoivent que d'autres élèves sont meilleurs qu'eux.",
+      "components": [
+        {
+          "text": "D'abord",
+          "type": "complément circonstanciel",
+          "label": "状语",
+          "color": "bg-gray-100",
+          "description": "副词，表示时间顺序"
+        },
+        {
+          "text": "beaucoup d'enfants",
+          "type": "sujet",
+          "label": "主语",
+          "color": "bg-blue-100",
+          "description": "名词短语，由数量副词(beaucoup)和介词短语(d'enfants)组成"
+        },
+        {
+          "text": "délaissent",
+          "type": "verbe",
+          "label": "谓语",
+          "color": "bg-orange-100",
+          "description": "动词délaisser的第三人称复数现在时形式"
+        },
+        {
+          "text": "la lecture",
+          "type": "COD",
+          "label": "宾语",
+          "color": "bg-yellow-50",
+          "description": "名词短语，由定冠词(la)和名词(lecture)组成"
+        },
+        {
+          "text": "quand ils s'aperçoivent que d'autres élèves sont meilleurs qu'eux",
+          "type": "proposition subordonnée",
+          "label": "从句",
+          "color": "bg-gray-100",
+          "description": "时间状语从句，由连词quand引导，包含主语ils、代动词s'aperçoivent和que引导的间接宾语从句"
+        }
+      ]
+    },
+    {
+      "fullText": "Ensuite, c'est lorsque l'on demande à l'enfant non seulement de déchiffrer mais aussi de comprendre, qu'il lâche prise.",
+      "components": [
+        {
+          "text": "Ensuite",
+          "type": "complément circonstanciel",
+          "label": "状语",
+          "color": "bg-gray-100",
+          "description": "副词，表示时间顺序"
+        },
+        {
+          "text": "c'est",
+          "type": "présentatif",
+          "label": "谓语",
+          "color": "bg-orange-100",
+          "description": "强调结构的一部分，由代词ce和être动词的现在时组成"
+        },
+        {
+          "text": "lorsque l'on demande à l'enfant non seulement de déchiffrer mais aussi de comprendre",
+          "type": "proposition subordonnée",
+          "label": "从句",
+          "color": "bg-gray-100",
+          "description": "时间状语从句，由连词lorsque引导，包含不定代词on作主语，动词demander，以及并列的不定式短语"
+        },
+        {
+          "text": "qu'il lâche prise",
+          "type": "proposition subordonnée",
+          "label": "从句",
+          "color": "bg-gray-100",
+          "description": "强调结构的第二部分，由que引导，包含主语il和动词短语lâcher prise(放弃)"
+        }
+      ]
+    },
+    {
+      "fullText": "Absence de compréhension rime en général avec manque de plaisir.",
+      "components": [
+        {
+          "text": "Absence de compréhension",
+          "type": "sujet",
+          "label": "主语",
+          "color": "bg-blue-100",
+          "description": "名词短语，由名词(absence)和介词短语(de compréhension)组成"
+        },
+        {
+          "text": "rime",
+          "type": "verbe",
+          "label": "谓语",
+          "color": "bg-orange-100",
+          "description": "动词rimer的第三人称单数现在时形式"
+        },
+        {
+          "text": "en général",
+          "type": "complément circonstanciel",
+          "label": "状语",
+          "color": "bg-gray-100",
+          "description": "副词短语，表示方式"
+        },
+        {
+          "text": "avec manque de plaisir",
+          "type": "COI",
+          "label": "间接宾语",
+          "color": "bg-blue-100",
+          "description": "介词短语，由介词(avec)、名词(manque)和介词短语(de plaisir)组成"
+        }
+      ]
+    },
+    {
+      "fullText": "Selon certains psychologues, si les enfants peinent à comprendre, c'est parce qu'ils ont des lacunes de culture générale.",
+      "components": [
+        {
+          "text": "Selon certains psychologues",
+          "type": "complément circonstanciel",
+          "label": "状语",
+          "color": "bg-gray-100",
+          "description": "介词短语，表示来源或依据"
+        },
+        {
+          "text": "si les enfants peinent à comprendre",
+          "type": "proposition subordonnée",
+          "label": "从句",
+          "color": "bg-gray-100",
+          "description": "条件状语从句，由连词si引导，包含主语les enfants和动词短语peiner à comprendre"
+        },
+        {
+          "text": "c'est",
+          "type": "présentatif",
+          "label": "谓语",
+          "color": "bg-orange-100",
+          "description": "强调结构的一部分，由代词ce和être动词的现在时组成"
+        },
+        {
+          "text": "parce qu'ils ont des lacunes de culture générale",
+          "type": "proposition subordonnée",
+          "label": "从句",
+          "color": "bg-gray-100",
+          "description": "原因状语从句，由连词parce que引导，包含主语ils、动词avoir和直接宾语des lacunes de culture générale"
+        }
+      ]
+    },
+    {
+      "fullText": "Or, celle-ci s'acquiert justement en lisant.",
+      "components": [
+        {
+          "text": "Or",
+          "type": "conjonction",
+          "label": "连词",
+          "color": "bg-gray-100",
+          "description": "连词，表示转折或对比关系"
+        },
+        {
+          "text": "celle-ci",
+          "type": "sujet",
+          "label": "主语",
+          "color": "bg-blue-100",
+          "description": "指示代词，指代前文中提到的culture générale"
+        },
+        {
+          "text": "s'acquiert",
+          "type": "verbe",
+          "label": "谓语",
+          "color": "bg-orange-100",
+          "description": "代动词s'acquérir的第三人称单数现在时形式"
+        },
+        {
+          "text": "justement",
+          "type": "complément circonstanciel",
+          "label": "状语",
+          "color": "bg-gray-100",
+          "description": "副词，表示方式"
+        },
+        {
+          "text": "en lisant",
+          "type": "complément circonstanciel",
+          "label": "状语",
+          "color": "bg-gray-100",
+          "description": "动名词短语，表示方式，由介词en和动词lire的现在分词组成"
+        }
+      ]
+    },
+    {
+      "fullText": "Comment sortir de ce cercle vicieux ?",
+      "components": [
+        {
+          "text": "Comment",
+          "type": "adverbe interrogatif",
+          "label": "状语",
+          "color": "bg-gray-100",
+          "description": "疑问副词，用于引导疑问句"
+        },
+        {
+          "text": "sortir",
+          "type": "verbe",
+          "label": "谓语",
+          "color": "bg-orange-100",
+          "description": "动词不定式，作为省略句的谓语"
+        },
+        {
+          "text": "de ce cercle vicieux",
+          "type": "COI",
+          "label": "间接宾语",
+          "color": "bg-blue-100",
+          "description": "介词短语，由介词(de)、指示形容词(ce)、名词(cercle)和形容词(vicieux)组成"
+        }
+      ]
+    },
+    {
+      "fullText": "Les psychologues conseillent de mettre des livres en évidence à la maison et d'introduire, à l'école, des temps de lecture « plaisir », où chaque enfant peut se plonger dans l'ouvrage de son choix.",
+      "components": [
+        {
+          "text": "Les psychologues",
+          "type": "sujet",
+          "label": "主语",
+          "color": "bg-blue-100",
+          "description": "名词短语，由定冠词(Les)和名词(psychologues)组成"
+        },
+        {
+          "text": "conseillent",
+          "type": "verbe",
+          "label": "谓语",
+          "color": "bg-orange-100",
+          "description": "动词conseiller的第三人称复数现在时形式"
+        },
+        {
+          "text": "de mettre des livres en évidence à la maison et d'introduire, à l'école, des temps de lecture « plaisir »",
+          "type": "COD",
+          "label": "宾语",
+          "color": "bg-yellow-50",
+          "description": "两个并列的不定式短语，作为动词conseiller的直接宾语"
+        },
+        {
+          "text": "où chaque enfant peut se plonger dans l'ouvrage de son choix",
+          "type": "proposition subordonnée",
+          "label": "从句",
+          "color": "bg-gray-100",
+          "description": "关系从句，由关系副词où引导，修饰前面的des temps de lecture « plaisir »，包含主语chaque enfant和动词短语peut se plonger"
+        }
+      ]
+    }
+  ]
+}

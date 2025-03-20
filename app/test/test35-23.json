@@ -1,0 +1,118 @@
+{
+  "originalText": "En dix ans le nombre de sources lumineuses sur la voie publique - panneaux publicitaires, lampadaires - a progressé en France de 30%. Première conséquence de cette consommation électrique : 50% de la population ne peut plus voir les étoiles. Seconde conséquence : la disparition des papillons, moustiques et autres insectes, qui tournent jusqu'à épuisement la nuit sous les lampadaires ou meurent grillés.",
+  "sentences": [
+    {
+      "fullText": "En dix ans le nombre de sources lumineuses sur la voie publique - panneaux publicitaires, lampadaires - a progressé en France de 30%.",
+      "components": [
+        {
+          "text": "En dix ans",
+          "type": "complément circonstanciel de temps",
+          "label": "状语",
+          "color": "#f4f4f4",
+          "description": "时间状语，表示在十年间的时间段"
+        },
+        {
+          "text": "le nombre de sources lumineuses sur la voie publique - panneaux publicitaires, lampadaires -",
+          "type": "sujet",
+          "label": "主语",
+          "color": "#E8F4FF",
+          "description": "名词短语作主语，包含同位语解释'panneaux publicitaires, lampadaires'"
+        },
+        {
+          "text": "a progressé",
+          "type": "prédicat",
+          "label": "谓语",
+          "color": "#FFE3CA",
+          "description": "动词短语，现在完成时(passé composé)，表示已完成的动作"
+        },
+        {
+          "text": "en France",
+          "type": "complément circonstanciel de lieu",
+          "label": "状语",
+          "color": "#f4f4f4",
+          "description": "地点状语，表示在法国"
+        },
+        {
+          "text": "de 30%",
+          "type": "complément circonstanciel de mesure",
+          "label": "状语",
+          "color": "#f4f4f4",
+          "description": "程度状语，表示增长的比例为30%"
+        }
+      ]
+    },
+    {
+      "fullText": "Première conséquence de cette consommation électrique : 50% de la population ne peut plus voir les étoiles.",
+      "components": [
+        {
+          "text": "Première conséquence de cette consommation électrique",
+          "type": "sujet",
+          "label": "主语",
+          "color": "#E8F4FF",
+          "description": "名词短语作主语，表示'这种电力消耗的第一个后果'"
+        },
+        {
+          "text": ":",
+          "type": "ponctuation",
+          "label": "标点",
+          "color": "#FFFFFF",
+          "description": "冒号，用于引出解释或列举"
+        },
+        {
+          "text": "50% de la population",
+          "type": "sujet",
+          "label": "主语",
+          "color": "#E8F4FF",
+          "description": "名词短语作主语，表示'50%的人口'"
+        },
+        {
+          "text": "ne peut plus voir",
+          "type": "prédicat",
+          "label": "谓语",
+          "color": "#FFE3CA",
+          "description": "动词短语，现在时态(présent)，包含否定形式'ne...plus'表示'不再能...'"
+        },
+        {
+          "text": "les étoiles",
+          "type": "complément d'objet direct",
+          "label": "宾语",
+          "color": "#FFFCDC",
+          "description": "直接宾语，表示'星星'，是动词'voir'的受词"
+        }
+      ]
+    },
+    {
+      "fullText": "Seconde conséquence : la disparition des papillons, moustiques et autres insectes, qui tournent jusqu'à épuisement la nuit sous les lampadaires ou meurent grillés.",
+      "components": [
+        {
+          "text": "Seconde conséquence",
+          "type": "sujet",
+          "label": "主语",
+          "color": "#E8F4FF",
+          "description": "名词短语作主语，表示'第二个后果'"
+        },
+        {
+          "text": ":",
+          "type": "ponctuation",
+          "label": "标点",
+          "color": "#FFFFFF",
+          "description": "冒号，用于引出解释或列举"
+        },
+        {
+          "text": "la disparition des papillons, moustiques et autres insectes",
+          "type": "prédicat nominal",
+          "label": "谓语",
+          "color": "#FFE3CA",
+          "description": "名词性谓语，表示'蝴蝶、蚊子和其他昆虫的消失'"
+        },
+        {
+          "text": "qui tournent jusqu'à épuisement la nuit sous les lampadaires ou meurent grillés",
+          "type": "proposition relative",
+          "label": "从句",
+          "color": "#f4f4f4",
+          "description": "关系从句，修饰'papillons, moustiques et autres insectes'，由关系代词'qui'引导"
+        }
+      ]
+    }
+  ]
+}

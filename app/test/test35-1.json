@@ -1,0 +1,93 @@
+{
+  "originalText": "Sophie,\n\nTu es jolie, intelligente, merveilleuse.\n\nJe t'aime ! Marions-nous !\n\nRobret",
+  "sentences": [
+    {
+      "fullText": "Sophie,",
+      "components": [
+        {
+          "text": "Sophie,",
+          "type": "apostrophe",
+          "label": "称呼语",
+          "color": "bg-gray-50",
+          "description": "称呼语，用于直接呼唤对方，后面通常跟逗号"
+        }
+      ]
+    },
+    {
+      "fullText": "Tu es jolie, intelligente, merveilleuse.",
+      "components": [
+        {
+          "text": "Tu",
+          "type": "sujet",
+          "label": "主语",
+          "color": "bg-blue-100",
+          "description": "主语，第二人称单数代词"
+        },
+        {
+          "text": "es",
+          "type": "prédicat",
+          "label": "谓语",
+          "color": "bg-orange-100",
+          "description": "谓语，être动词的直陈式现在时第二人称单数形式"
+        },
+        {
+          "text": "jolie, intelligente, merveilleuse",
+          "type": "attribut du sujet",
+          "label": "主语补语",
+          "color": "bg-yellow-50",
+          "description": "主语补语，形容词，用于描述主语的特征"
+        }
+      ]
+    },
+    {
+      "fullText": "Je t'aime !",
+      "components": [
+        {
+          "text": "Je",
+          "type": "sujet",
+          "label": "主语",
+          "color": "bg-blue-100",
+          "description": "主语，第一人称单数代词"
+        },
+        {
+          "text": "t'",
+          "type": "COD",
+          "label": "宾语",
+          "color": "bg-yellow-50",
+          "description": "直接宾语，第二人称单数代词的缩写形式，位于动词前"
+        },
+        {
+          "text": "aime",
+          "type": "prédicat",
+          "label": "谓语",
+          "color": "bg-orange-100",
+          "description": "谓语，aimer动词的直陈式现在时第一人称单数形式"
+        }
+      ]
+    },
+    {
+      "fullText": "Marions-nous !",
+      "components": [
+        {
+          "text": "Marions-nous",
+          "type": "prédicat",
+          "label": "谓语",
+          "color": "bg-orange-100",
+          "description": "谓语，marier动词的命令式第一人称复数形式，与反身代词nous连用，表示'让我们结婚吧'"
+        }
+      ]
+    },
+    {
+      "fullText": "Robret",
+      "components": [
+        {
+          "text": "Robret",
+          "type": "signature",
+          "label": "署名",
+          "color": "bg-gray-50",
+          "description": "信件末尾的署名，表示写信人的姓名"
+        }
+      ]
+    }
+  ]
+}

@@ -1,6 +1,8 @@
 
 import { AudioPlayerWithSubtitles } from "./audio-player";
-
+import GrammarVisualizer from "./GrammarVisualizer";
+import AnalysisVisualizer from "./AnalysisVisualizer";
+import jsonData from "./test35-a33.json";
 
 function Unauthorized() {
   // 创建交替的红灰加号图案，使用更柔和的粉红色
@@ -23,10 +25,8 @@ function Unauthorized() {
       <div className="relative z-10 w-full max-w-lg mx-4">
         <div className="bg-white rounded-lg shadow-xl p-8 text-center relative">
           {/* 音频播放器 */}
-          <AudioPlayerWithSubtitles
-            audioUrl="https://assets.celpipbro.com/LISTENING/36/29.mp3"
-            subtitleUrl="/api/assets/LISTENING/36/29.srt"
-          />
+         <GrammarVisualizer />
+         <AnalysisVisualizer data={jsonData} />
 
 
           {/* Logo */}
