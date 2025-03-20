@@ -16,6 +16,7 @@ export default function Signup() {
     email: "",
     password: "",
     verificationCode: "",
+    registerCode: "",
   });
   const [optTimer, setOptTimer] = useState(0);
   const { push } = useRouter();
@@ -31,6 +32,7 @@ export default function Signup() {
           email: form.email,
           password: form.password,
           verificationCode: form.verificationCode,
+          registerCode: form.registerCode,
         },
       });
       if (error) {
@@ -183,11 +185,24 @@ export default function Signup() {
                     htmlFor="invitationCode"
                     className="block text-sm font-[28px] leading-6 text-gray-900"
                   >
-                    邀请码
+                    注册码
                   </label>
                   <div className="text-sm"></div>
                 </div>
                 <div className="text-sm"></div>
+              </div>
+              <div className="mt-2">
+                <InputBorderSpotlight
+                  placeholder="16-digit code"
+                  value={form.registerCode}
+                  onChange={(e) =>
+                    setForm({ ...form, registerCode: e.target.value })
+                  }
+                  id="registerCode"
+                  type="text"
+                  required
+                  className="px-3 block w-full rounded-xl border border-gray-300 py-1.5 text-gray-900 shadow-sm focus:ring-2 focus:ring-primary focus:border-primary sm:text-sm sm:leading-6"
+                />
               </div>
             </div>
 
@@ -203,7 +218,8 @@ export default function Signup() {
                   toast.promise(request(), {
                     loading: "验证中...",
                     success: () => {
-                      return "注册成功";
+                      push("/auth/login");
+                      return "注册成功，请登录";
                     },
                     error: (e) => {
                       return `${e}`;

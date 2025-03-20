@@ -5,6 +5,7 @@ export const signUpInputSchema = z.object({
   email: safeEmailSchema,
   password: z.string().min(6).max(24),
   verificationCode: z.string(),
+  registerCode: z.string(),
 });
 
 export const signInByPasswordInputSchema = z.object({

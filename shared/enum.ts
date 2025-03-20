@@ -41,3 +41,8 @@ export enum Subject {
   WRITING = "WRITING",
   SPEAKING = "SPEAKING",
 }
+
+export enum SubscriptionType {
+  ESSENTIAL = "ESSENTIAL",
+  PRO = "PRO",
+}
