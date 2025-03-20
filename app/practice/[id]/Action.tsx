@@ -20,6 +20,8 @@ import { useToast } from "@/hooks/use-toast";
 import { checkPoint } from "./actions";
 import { useRouter } from "next/navigation";
 
+const buttonBaseClass = "group relative isolate inline-flex items-center justify-center overflow-hidden text-left font-medium transition duration-300 ease-[cubic-bezier(0.4,0.36,0,1)] before:duration-300 before:ease-[cubic-bezier(0.4,0.36,0,1)] before:transtion-opacity rounded-md shadow-[0_1px_theme(colors.white/0.07)_inset,0_1px_3px_theme(colors.gray.900/0.2)] before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:rounded-md before:bg-gradient-to-b before:from-white/20 before:opacity-50 hover:before:opacity-100 after:pointer-events-none after:absolute after:inset-0 after:-z-10 after:rounded-md after:bg-gradient-to-b after:from-white/10 after:from-[46%] after:to-[54%] after:mix-blend-overlay text-sm px-3 py-[0.1875rem] ring-1 bg-[#1782FF] text-white ring-[#1782FF] hover:bg-[#1782FF] hover:text-white hover:ring-[#1782FF]";
+
 function Action() {
   const {
     clientSideCurrentQuestion,
@@ -78,12 +80,7 @@ function Action() {
 
   return (
     <div className="border-t-[1px] border-[#F2F2F2] inline-flex gap-2 px-3 py-4 h-[64px] items-center justify-between bg-white">
-      <LastQuestionButton
-        isClientSideTimeOut={isClientSideTimeOut}
-        isFirstQuestion={isFirstQuestion}
-        previousQuestion={previousQuestion}
-      />
-      <div className="flex text-sm text-[#595959] grow justify-center items-center">
+      <div className="flex text-sm text-[#595959] items-center">
         {isSubmitted && (
           <div>
             已交卷 用时
@@ -109,17 +106,25 @@ function Action() {
           isClientSideTimeOut={isClientSideTimeOut}
         />
       </div>
-      <SubmitButton
-        isLastQuestion={isLastQuestion}
-        isClientSideTimeOut={isClientSideTimeOut}
-        isSubmitted={isSubmitted}
-        submitPractice={submitPractice}
-      />
-      <NextButton
-        isClientSideTimeOut={isClientSideTimeOut}
-        isLastQuestion={isLastQuestion}
-        nextQuestion={nextQuestion}
-      />
+      
+      <div className="flex items-center gap-2">
+        <LastQuestionButton
+          isClientSideTimeOut={isClientSideTimeOut}
+          isFirstQuestion={isFirstQuestion}
+          previousQuestion={previousQuestion}
+        />
+        <SubmitButton
+          isLastQuestion={isLastQuestion}
+          isClientSideTimeOut={isClientSideTimeOut}
+          isSubmitted={isSubmitted}
+          submitPractice={submitPractice}
+        />
+        <NextButton
+          isClientSideTimeOut={isClientSideTimeOut}
+          isLastQuestion={isLastQuestion}
+          nextQuestion={nextQuestion}
+        />
+      </div>
     </div>
   );
 }
@@ -184,9 +189,7 @@ function LastQuestionButton({
   return (
     <Button
       disabled={isFirstQuestion}
-      className="border-[#FF2442] text-[#FF2442] hover:bg-[#FF2442] hover:text-white rounded-xl"
-      variant={"outline"}
-      size={"sm"}
+      className={buttonBaseClass}
       onClick={() => previousQuestion()}
     >
       <ArrowLeft className="w-4 h-4" />
@@ -214,8 +217,7 @@ function SubmitButton({
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          className="bg-[#1782FF] text-white hover:bg-[#1782FF]/80 rounded-xl"
-          size={"sm"}
+          className={buttonBaseClass}
         >
           {isClientSideTimeOut ? "时间结束 请交卷" : "交卷"}
         </Button>
@@ -263,7 +265,7 @@ function NextButton({
     <Button
       hidden={isClientSideTimeOut}
       disabled={isLastQuestion}
-      className="bg-[#1782FF] text-white hover:bg-[#1782FF]/80 rounded-xl"
+      className={buttonBaseClass}
       onClick={() => nextQuestion()}
     >
       下一题

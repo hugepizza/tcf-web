@@ -26,8 +26,8 @@ async function PracticePage({ params }: { params: Promise<{ id: string }> }) {
       <HeaderServer />
       <PracticeProvider practice={practice}>
         {/* 手机端反向布局 题目在上面看起来合理一点 */}
-        <div className="flex sm:flex-row flex-col-reverse  w-full grow">
-          <div className="sm:w-1/6 flex flex-col gap-2 pt-[15px]  pb-2 px-3 border-[#F2F2F2] border-[1px]">
+        <div className="flex sm:flex-row flex-col-reverse w-full grow">
+          <div className="sm:w-1/6 flex flex-col gap-2 pt-2 pb-2 border-[#F2F2F2] border-[1px]">
             <Side />
           </div>
           <div className="sm:w-5/6 flex flex-col bg-white">

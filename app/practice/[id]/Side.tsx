@@ -17,10 +17,10 @@ function Side() {
   const { back } = useRouter();
   return (
     <>
-      <div>
+      <div className="px-3">
         <Button
           variant="outline"
-          className="w-full border-[#FF2442] text-[#FF2442] hover:bg-[#FF2442] hover:text-white"
+          className="group w-full relative inline-flex select-none items-center justify-center bg-[--button-color-bg] font-medium outline-none transition before:bg-[radial-gradient(75%_75%_at_center_top,theme(colors.white/0.2),transparent)] before:transition after:transition ring-[0.03125rem] ring-transparent ring-offset-[0.03125rem] ring-offset-[--button-color-border] focus-visible:ring-[--button-color-ring] overflow-hidden [--button-color-border:theme(colors.black/0.1)] dark:[--button-color-border:theme(colors.white/0.12)] [--button-color-bg:theme(colors.white)] dark:[--button-color-bg:theme(colors.gray.300)] [--button-color-icon:theme(colors.gray.1200)] [--button-color-icon-hover:theme(colors.gray.1200)] [--button-color-ring:theme(colors.black/0.08)] [--button-color-text:theme(colors.gray.1200)] before:absolute before:inset-0 before:rounded-inherit before:bg-gradient-to-b before:from-black/0 before:from-50% before:to-black/[0.02] before:transition-opacity rounded px-3 py-1.5 text-base hover:[--button-color-bg:theme(colors.gray.100)] shrink-0"
           onClick={() => back()}
         >
           <ArrowLeft className="w-4 h-4" />
@@ -28,7 +28,7 @@ function Side() {
         </Button>
       </div>
 
-      <div className="w-full px-4 h-[1px] bg-[#E6E6E6]" />
+      <div className="w-full px-4 h-[1px] bg-gray-100" />
 
       {isSubmitted && (
         <>
@@ -61,7 +61,7 @@ function Side() {
           )}
         </div>
       </div>
-      <div className="grid grid-cols-6 gap-1 text-center">
+      <div className="px-3 grid grid-cols-6 gap-1 text-center">
         {practice.questions.map((question, index) => (
           <div
             key={question.id}

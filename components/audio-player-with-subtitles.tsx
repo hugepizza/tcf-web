@@ -309,118 +309,115 @@ export function AudioPlayerWithSubtitles({
       />
 
       {/* 播放速度选择和字幕按钮 */}
-      <div className="flex items-center justify-between gap-2 p-1 w-full">
-        <div className="relative flex-1">
+      <div className="flex flex-col gap-2 p-1 w-full">
+        {/* 顶部控制栏 */}
+        <div className="flex items-center justify-between gap-2">
           <button
             onClick={() => setIsSpeedMenuOpen(!isSpeedMenuOpen)}
-            className="flex items-center justify-center px-4 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-sm text-gray-600"
+            className={`flex items-center justify-center px-4 py-1.5 rounded-full transition-colors duration-200 ${isSpeedMenuOpen
+                ? "bg-red-600 text-white"
+                : "bg-gray-100 hover:bg-gray-200 text-gray-600"
+              }`}
           >
             {playbackRate}x
             <ChevronUpIcon
-              className={`w-4 h-4 ml-1 transition-transform duration-200 ${
-                isSpeedMenuOpen ? "rotate-180" : ""
-              }`}
+              className={`w-4 h-4 ml-1 transition-transform duration-200 ${isSpeedMenuOpen ? "rotate-180" : ""
+                }`}
             />
           </button>
-          
-          {isSpeedMenuOpen && (
-            <div className="absolute top-full left-0 mt-1 w-full bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-10">
-              {[0.2, 0.5, 0.75, 1, 1.25, 1.5, 2.0].map((rate) => (
-                <button
-                  key={rate}
-                  onClick={() => {
-                    handleSpeedChange(rate);
-                    setIsSpeedMenuOpen(false);
-                  }}
-                  className={`w-full px-4 py-2 text-left text-sm hover:bg-gray-50 ${
-                    playbackRate === rate ? "text-red-600 font-medium" : "text-gray-600"
+
+          {subtitleUrl && (
+            <div
+              onClick={() => setIsSubtitleOpen(!isSubtitleOpen)}
+              className={`inline-flex items-center gap-2 text-sm px-4 py-1.5 rounded-full transition-colors duration-200 cursor-pointer ${isSubtitleOpen
+                  ? "bg-red-600 text-white"
+                  : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                }`}
+            >
+              <span>精听</span>
+              <ChevronUpIcon
+                className={`w-4 h-4 transition-transform duration-200 ${isSubtitleOpen ? "rotate-180" : ""
                   }`}
-                >
-                  {rate}x
-                </button>
-              ))}
+              />
             </div>
           )}
         </div>
 
-        {subtitleUrl && (
-          <div
-            onClick={() => setIsSubtitleOpen(!isSubtitleOpen)}
-            className={`inline-flex items-center gap-2 text-sm px-4 py-1.5 rounded-full transition-colors duration-200 cursor-pointer ${
-              isSubtitleOpen
-                ? "bg-red-600 text-white"
-                : "bg-gray-100 text-gray-600 hover:bg-gray-200"
-            }`}
-          >
-            <span>精听</span>
-            <ChevronUpIcon
-              className={`w-4 h-4 transition-transform duration-200 ${
-                isSubtitleOpen ? "rotate-180" : ""
-              }`}
-            />
+        {/* 速度选择按钮组 */}
+        {isSpeedMenuOpen && (
+          <div className="flex flex-wrap gap-2 px-1">
+            {[0.2, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2.0].map((rate) => (
+              <button
+                key={rate}
+                onClick={() => handleSpeedChange(rate)}
+                className={`px-3 py-1.5 rounded-full text-sm ${playbackRate === rate
+                    ? "bg-red-600 text-white"
+                    : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                  }`}
+              >
+                {rate}x
+              </button>
+            ))}
           </div>
         )}
-      </div>
 
-      {/* 字幕显示区域 */}
-      {subtitleUrl && (
-        <Disclosure open={isSubtitleOpen} onOpenChange={setIsSubtitleOpen}>
-          <DisclosureContent>
-            <div
-              ref={subtitleContainerRef}
-              className="max-h-[400px] overflow-y-auto px-2 py-2"
-            >
-              {error ? (
-                <p className="text-red-500 text-sm p-4 text-center">{error}</p>
-              ) : subtitles.length === 0 ? (
-                <p className="text-gray-400 p-4 text-center">加载字幕中...</p>
-              ) : (
-                <div className="space-y-3">
-                  {subtitles.map((subtitle) => (
-                    <div
-                      key={subtitle.id}
-                      id={`subtitle-${subtitle.id}`}
-                      className={`py-3 px-3 rounded-lg transition-colors duration-200 cursor-pointer hover:bg-gray-50 ${
-                        currentTime >= subtitle.start &&
-                        currentTime <= subtitle.end
-                          ? "bg-orange-50"
-                          : ""
-                      }`}
-                      onClick={() => jumpToSubtitle(subtitle)}
-                    >
-                      <div className="text-gray-400 text-xs mb-1.5">
-                        {subtitle.timestamp}
-                      </div>
+        {/* 字幕显示区域 */}
+        {subtitleUrl && (
+          <Disclosure open={isSubtitleOpen} onOpenChange={setIsSubtitleOpen}>
+            <DisclosureContent>
+              <div
+                ref={subtitleContainerRef}
+                className="max-h-[400px] overflow-y-auto px-2 py-2"
+              >
+                {error ? (
+                  <p className="text-red-500 text-sm p-4 text-center">{error}</p>
+                ) : subtitles.length === 0 ? (
+                  <p className="text-gray-400 p-4 text-center">加载字幕中...</p>
+                ) : (
+                  <div className="space-y-3">
+                    {subtitles.map((subtitle) => (
                       <div
-                        className={`text-[15px] leading-relaxed ${
-                          currentTime >= subtitle.start &&
-                          currentTime <= subtitle.end
-                            ? "text-orange-600 font-medium"
-                            : "text-gray-700"
-                        }`}
-                      >
-                        {subtitle.text}
-                      </div>
-                      {subtitle.translation && (
-                        <div
-                          className={`text-[14px] mt-1.5 leading-relaxed ${
-                            currentTime >= subtitle.start &&
+                        key={subtitle.id}
+                        id={`subtitle-${subtitle.id}`}
+                        className={`py-3 px-3 rounded-lg transition-colors duration-200 cursor-pointer hover:bg-gray-50 ${currentTime >= subtitle.start &&
                             currentTime <= subtitle.end
-                              ? "text-orange-500"
-                              : "text-gray-500"
+                            ? "bg-orange-50"
+                            : ""
                           }`}
-                        >
-                          {subtitle.translation}
+                        onClick={() => jumpToSubtitle(subtitle)}
+                      >
+                        <div className="text-gray-400 text-xs mb-1.5">
+                          {subtitle.timestamp}
                         </div>
-                      )}
-                    </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          </DisclosureContent>
-        </Disclosure>
-      )}
+                        <div
+                          className={`text-[15px] leading-relaxed ${currentTime >= subtitle.start &&
+                              currentTime <= subtitle.end
+                              ? "text-orange-600 font-medium"
+                              : "text-gray-700"
+                            }`}
+                        >
+                          {subtitle.text}
+                        </div>
+                        {subtitle.translation && (
+                          <div
+                            className={`text-[14px] mt-1.5 leading-relaxed ${currentTime >= subtitle.start &&
+                                currentTime <= subtitle.end
+                                ? "text-orange-500"
+                                : "text-gray-500"
+                              }`}
+                          >
+                            {subtitle.translation}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </DisclosureContent>
+          </Disclosure>
+        )}
+      </div>
     </div>
   );
 }
