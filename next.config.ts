@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     config.resolve.alias.canvas = false;
     return config;
   },
-
+  output: "standalone",
   experimental: {
     ppr: true,
   },
