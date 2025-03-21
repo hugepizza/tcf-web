@@ -25,9 +25,9 @@ jobs:
       # Step 4: Build the Docker image and tag it with the commit hash
       - name: Build and tag the Docker image
         env:
-          NEXT_PUBLIC_BACKEND_URL: "https://api.tcfgo.com"
+          NEXT_PUBLIC_BACKEND_URL: "https://api.tcfgo.com/v1"
         run: |
-          docker build . -t ${{ secrets.DOCKER_REPO }}/tcf-web:${{ github.sha }}
+          docker build . --build-arg NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL -t ${{ secrets.DOCKER_REPO }}/tcf-web:${{ github.sha }}
           docker tag ${{ secrets.DOCKER_REPO }}/tcf-web:${{ github.sha }} ${{ secrets.DOCKER_REPO }}/tcf-web:latest
 
       # Step 5: Push the Docker image to Docker Hub (or your private registry)
