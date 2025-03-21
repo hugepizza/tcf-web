@@ -25,15 +25,12 @@ export default function Signup() {
     if (v.error) {
       throw v.error;
     }
-    try {
-      const { error } = await signupAction(form);
-      if (error) {
-        throw error.message;
-      }
-      toast.success("注册成功，请登录");
-      push("/auth/login");
-    } catch (e) {
-      throw e;
+
+    const { error } = await signupAction(form);
+    if (error) {
+      console.log("error occurred");
+      console.log(error);
+      throw error.message;
     }
   };
 
@@ -215,7 +212,7 @@ export default function Signup() {
                       return "注册成功，请登录";
                     },
                     error: (e) => {
-                      return `${e}`;
+                      return e;
                     },
                   });
                 }}

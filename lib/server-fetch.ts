@@ -3,6 +3,7 @@ import { Response } from "@/shared/schemas/base";
 import { apiUrl } from "./api";
 import { BizError } from "@/shared/errors";
 import { createHeaders } from "./header";
+import { ClientError } from "@/shared/client-error";
 
 export const fetchMutate = async <T = unknown>({
   path,
@@ -31,7 +32,11 @@ export const fetchMutate = async <T = unknown>({
   if (data.code !== 200) {
     return {
       data: null,
-      error: new BizError(data.code, data.message || "reqest failed"),
+      error: {
+        name: data.code,
+        message: data.message || "reqest failed",
+        code: data.code,
+      } as ClientError,
     };
   }
 
