@@ -26,6 +26,9 @@ const nextConfig: NextConfig = {
       {
         hostname: "assets.celpipbro.com",
       },
+      {
+        hostname: "assets.tcfgo.com",
+      },
     ],
   },
   // async rewrites() {
