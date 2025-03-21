@@ -90,6 +90,8 @@ async function ResourcesPage({
               key={item.id}
               suit={item}
               index={index + 1}
+              questionCount={item.questionCount}
+              duration={item.duration}
               subject={subject.toUpperCase()}
             />
           ))}
