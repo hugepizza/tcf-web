@@ -7,6 +7,15 @@ const config: Config = {
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+  // 添加 safelist 确保蓝色类被包含
+  safelist: [
+    'bg-blue-200',
+    'hover:bg-blue-300',
+    'dark:hover:bg-blue-400/50',
+    'dark:text-blue-50',
+    'dark:bg-blue-500/40',
+    // 你可以添加更多需要确保被编译的类
+  ],
   theme: {
     fontFamily: {
       sans: ['geist'],
@@ -68,6 +77,20 @@ const config: Config = {
           'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
+        },
+        // 使用 OKLCH 格式的蓝色阶梯
+        blue: {
+          '50': '#eff6ff',
+          '100': '#dbeafe',
+          '200': '#bfdbfe',
+          '300': '#93c5fd',
+          '400': '#60a5fa',
+          '500': '#3b82f6',
+          '600': '#2563eb',
+          '700': '#1d4ed8',
+          '800': '#1e40af',
+          '900': '#1e3a8a',
+          '950': '#172554',
         },
       },
     },

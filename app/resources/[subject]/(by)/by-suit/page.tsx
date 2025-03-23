@@ -22,7 +22,7 @@ async function ResourcesPage({
   const { subject } = await params;
   const { page } = await searchParams;
   const currentPage = page ? parseInt(page) : 1;
-  const itemsPerPage = 10;
+  const itemsPerPage = 12;
 
   const response = await fetch(
     apiUrl(
@@ -83,7 +83,7 @@ async function ResourcesPage({
 
   return (
     <>
-      <div className="grow overflow-y-scroll sm:px-10 py-2">
+      <div className="grow overflow-y-scroll px-2 sm:px-10 py-4 sm:py-10 bg-gray-50/50">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {data.data.items.map((item, index) => (
             <SuitItem
