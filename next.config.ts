@@ -43,7 +43,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/",
-        destination: "/resources/listening/by-suit",
+        destination: "/resources/listening/by-suite",
         permanent: true,
       },
     ];

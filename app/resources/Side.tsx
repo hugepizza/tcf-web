@@ -27,14 +27,14 @@ async function Side() {
           </div>
         </Link>
         <Link
-          href="/resources/listening/by-suit"
+          href="/resources/listening/by-suite"
           className="font-medium text-base w-full px-4 py-2 flex items-center gap-2 text-gray-600 transition-all cursor-pointer  hover:text-gray-800 hover:translate-x-1"
         >
           <Image src="/side/CO.png" alt="CO" width={24} height={24} />
           听力
         </Link>
         <Link
-          href="/resources/reading/by-suit"
+          href="/resources/reading/by-suite"
           className="font-medium text-base w-full px-4 py-2 flex items-center gap-2 text-gray-600 transition-all cursor-pointer backdrop-blur-[20px] hover:text-gray-800 hover:translate-x-1"
         >
           <Image src="/side/E.png" alt="reading" width={24} height={24} />

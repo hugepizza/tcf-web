@@ -31,7 +31,7 @@ async function HeaderServer() {
       <div className="flex flex-row space-x-[10px] h-full items-center justify-start flex-grow">
         <NavItem
           text="练习题"
-          path="/resources/listening/by-suit"
+          path="/resources/listening/by-suite"
           active={true}
         />
         <NavItem text="备考攻略" path="/blog" active={true} />

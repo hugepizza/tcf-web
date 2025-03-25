@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { AlignLeft, BookOpen, Headphones, ChevronDown } from "lucide-react";
 import Link from "next/link";
-import { Selector } from "@/app/resources/[subject]/(by)/by-suit/Selector";
+import { Selector } from "@/app/resources/[subject]/(by)/by-suite/Selector";
 
 async function ResourcesLayout({
   children,
@@ -21,14 +21,14 @@ async function ResourcesLayout({
 
   return (
     <div className="gap-0 h-full flex flex-col">
-      {by !== 'history' && (
+      {by !== "history" && (
         <div className="border-b-[1px] border-[#F2F2F2] px-3 h-16 sm:pr-10 flex items-center justify-between bg-white">
           <div className="flex items-center gap-2 text-lg font-semibold">
             <Selector />
           </div>
           <NavItem
             text="按套题分组"
-            path="/resources/listening/by-suit"
+            path="/resources/listening/by-suite"
             active={true}
           />
         </div>

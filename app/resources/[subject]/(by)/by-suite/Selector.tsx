@@ -22,8 +22,8 @@ export function Selector() {
   };
 
   const options = [
-    { label: '阅读', path: '/resources/reading/by-suit' },
-    { label: '听力', path: '/resources/listening/by-suit' }
+    { label: '阅读', path: '/resources/reading/by-suite' },
+    { label: '听力', path: '/resources/listening/by-suite' }
   ];
 
   // 根据当前路径设置初始选中值

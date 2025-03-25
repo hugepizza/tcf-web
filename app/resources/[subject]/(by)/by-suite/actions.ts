@@ -9,7 +9,7 @@ export const startPracticeBySuit = async (suitId: string) => {
       id: string;
     };
   }>({
-    path: "/practices/by-suit",
+    path: "/practices/by-suite",
     method: "POST",
     body: { suitId },
   });

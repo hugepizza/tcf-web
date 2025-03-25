@@ -26,7 +26,7 @@ async function ResourcesPage({
 
   const response = await fetch(
     apiUrl(
-      `/resources/by-suit?subject=${subject.toUpperCase()}&page=${currentPage}&pageSize=${itemsPerPage}`
+      `/resources/by-suite?subject=${subject.toUpperCase()}&page=${currentPage}&pageSize=${itemsPerPage}`
     )
   );
   const data = (await response.json()) as {
