@@ -22,7 +22,7 @@ async function Side() {
               boxShadow: "inset 0px 0px 0px 1px rgba(255, 255, 255, 0.1)",
             }}
           >
-            <Image src="/side/home.png" alt="home" width={24} height={24} />
+            <Image src="/side/Home.png" alt="home" width={24} height={24} />
             首页
           </div>
         </Link>
