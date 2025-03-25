@@ -13,7 +13,11 @@ import { notFound } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { AudioPlayerWithSubtitles } from "@/components/audio-player-with-subtitles";
 import { Practice } from "@/shared/schemas/practice";
-import { Disclosure, DisclosureTrigger, DisclosureContent } from "@/components/core/disclosure";
+import {
+  Disclosure,
+  DisclosureTrigger,
+  DisclosureContent,
+} from "@/components/core/disclosure";
 import React from "react";
 
 function Main() {
@@ -42,7 +46,7 @@ function Main() {
   return (
     <div className="flex w-full h-full flex-col lg:flex-row">
       <div className="flex flex-col flex-1 bg-gray-50">
-        <PracticeHeader 
+        <PracticeHeader
           questionIndex={currentQuestionIndex}
           difficulty={currentQuestion.difficulty}
           score={currentQuestion.score}
@@ -57,14 +61,15 @@ function Main() {
             </div>
           </div>
           <AnswerCard>
-            {currentQuestion.subject === Subject.READING && currentQuestion.imageContent?.questions && (
-              <div className="w-full bg-gray-50 rounded-lg p-4 border border-gray-100">
-                <div className="text-sm text-gray-500 mb-1">问题：</div>
-                <div className="text-lg text-gray-900">
-                  {currentQuestion.imageContent.questions}
+            {currentQuestion.subject === Subject.READING &&
+              currentQuestion.imageContent?.questions && (
+                <div className="w-full bg-gray-50 rounded-lg p-4 border border-gray-100">
+                  <div className="text-sm text-gray-500 mb-1">问题：</div>
+                  <div className="text-lg text-gray-900">
+                    {currentQuestion.imageContent.questions}
+                  </div>
                 </div>
-              </div>
-            )}
+              )}
             {/* 题干*/}
             {currentQuestion.stem && (
               <div className="font-semibold text-[#434343] text-lg">
@@ -82,14 +87,14 @@ function Main() {
                   userAnswer={
                     isSubmitted
                       ? clientSideAnswers.find(
-                        (answer) => answer.questionId === currentQuestion.id
-                      )?.answer ?? ""
+                          (answer) => answer.questionId === currentQuestion.id
+                        )?.answer ?? ""
                       : clientSideCurrentAnswer
                   }
                   answerKey={
                     clientSideAnswers.find(
                       (answer) => answer.questionId === currentQuestion.id
-                    )?.answerKey ?? "x"
+                    )?.answerKey ?? ""
                   }
                   readOnly={isClientSideReadOnly}
                   setUserAnswer={setClientSideCurrentAnswer}
@@ -120,10 +125,18 @@ function Main() {
         {currentQuestion.imageContent?.original_text_translation &&
           currentQuestion.imageContent?.questions_translation && (
             <ReadingTranslation
-              originalText={currentQuestion.imageContent.original_text_translation}
+              originalText={
+                currentQuestion.imageContent.original_text_translation
+              }
               questionText={currentQuestion.imageContent.questions_translation}
             />
           )}
+        {currentQuestion.optionsTranslation.map((option, index) => (
+          <div key={index}>
+            <div>{option.english}</div>
+            <div>{option.chinese}</div>
+          </div>
+        ))}
       </PracticeSidebar>
     </div>
   );
@@ -178,9 +191,9 @@ function Option({
       className={cn(
         "w-full bg-[#FAFAFA] rounded-md px-3 py-2 flex gap-2 outline outline-[2px] outline-[#FAFAFA] cursor-pointer duration-150",
         !isSubmitted &&
-        (userAnswer === index.toString()
-          ? "bg-[#E5F7EA]  outline-[#18A058]"
-          : "hover:bg-[#E5F7EA]"),
+          (userAnswer === index.toString()
+            ? "bg-[#E5F7EA]  outline-[#18A058]"
+            : "hover:bg-[#E5F7EA]"),
         isSubmitted && isClientSideCorrect && "bg-[#E5F7EA]  outline-[#18A058]",
         isSubmitted && isClientSideWrong && "bg-[#FFE5E5]  outline-[#FF2442]"
       )}
@@ -286,7 +299,7 @@ function ReadingImageContent({
 
 function ReadingTranslation({
   originalText,
-  questionText
+  questionText,
 }: {
   originalText: string;
   questionText: string;
@@ -309,17 +322,13 @@ function ReadingTranslation({
         </DisclosureTrigger>
         <DisclosureContent>
           <div className="bg-white rounded-md p-2 border-gray-200 border">
-            <div className="text-sm font-medium text-gray-500 mb-1">
-              原文：
-            </div>
+            <div className="text-sm font-medium text-gray-500 mb-1">原文：</div>
             <div className="text-sm text-gray-800 leading-relaxed">
               {originalText}
             </div>
           </div>
           <div className="bg-white rounded-md p-2 mt-1 border-gray-200 border">
-            <div className="text-sm font-medium text-gray-500 mb-1">
-              问题：
-            </div>
+            <div className="text-sm font-medium text-gray-500 mb-1">问题：</div>
             <div className="text-sm text-gray-800 leading-relaxed">
               {questionText}
             </div>
@@ -354,8 +363,12 @@ function PracticeHeader({
         <span className="font-medium">Question {questionIndex + 1}</span>
       </div>
       <div className="flex items-center gap-4 text-gray-500 text-base">
-        <div>难度：<span className="text-gray-700">{difficulty}</span></div>
-        <div>分值：<span className="text-gray-700">{score}分</span></div>
+        <div>
+          难度：<span className="text-gray-700">{difficulty}</span>
+        </div>
+        <div>
+          分值：<span className="text-gray-700">{score}分</span>
+        </div>
       </div>
     </div>
   );

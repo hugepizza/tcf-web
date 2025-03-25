@@ -4,6 +4,11 @@ import { dateStringSchema } from "./base-schema";
 
 export type Practice = z.infer<typeof practiceSchema>;
 
+export const optionsTranslationSchema = z.object({
+  chinese: z.string(),
+  english: z.string(),
+});
+
 export const imageContentSchema = z.object({
   original_text: z.string().optional().default(""),
   questions_translation: z.string().optional().default(""),
@@ -37,6 +42,7 @@ export const practiceSchema = z.object({
       id: z.string(),
       stem: z.string(),
       options: z.array(z.string()),
+      optionsTranslation: optionsTranslationSchema.array(),
       image: z.string().optional(),
       imageContent: imageContentSchema.optional(),
       audio: z.string().optional(),
