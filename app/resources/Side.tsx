@@ -13,7 +13,33 @@ async function Side() {
   }
   return (
     <div className="sm:w-1/6 hidden sm:flex flex-col gap-2 w-0 border-r-[1px] border-[#F2F2F2]">
-      <div className="h-[1px] w-full bg-[#F2F2F2]" />
+      <div className="mt-auto">
+        <header
+          className="relative flex flex-col items-center px-2 h-32"
+          style={{
+            background: `
+              linear-gradient(to top, #dbf9ff, rgba(219, 249, 255, 0) 60%, rgba(219, 249, 255, 0)),
+              url('/side/side-bg.svg')
+            `,
+            backgroundPosition: "center",
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "contain",
+            transform: "scaleY(-1)",
+          }}
+        >
+          <div
+            className="absolute inset-0 flex flex-col items-center justify-center text-gray-600"
+            style={{ transform: "scaleY(-1)" }}
+          >
+            <div className="font-medium">
+              {subscription.subscriptionType}套餐
+            </div>
+            <div className="text-sm">
+              有效期至 {subscription.subscriptionExpiredAt}
+            </div>
+          </div>
+        </header>
+      </div>  
       <div className="flex flex-col h-full gap-3">
         <Link href="/" className="w-full">
           <div
@@ -43,33 +69,6 @@ async function Side() {
       </div>
       <div className="h-[1px] w-full bg-[#F2F2F2]" />
       <Announcement />
-      <div className="mt-auto">
-        <header
-          className="relative flex flex-col items-center px-2 h-32"
-          style={{
-            background: `
-              linear-gradient(to top, #dbf9ff, rgba(219, 249, 255, 0) 60%, rgba(219, 249, 255, 0)),
-              url('/side/side-bg.svg')
-            `,
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
-            backgroundSize: "contain",
-            transform: "scaleY(-1)",
-          }}
-        >
-          <div
-            className="absolute inset-0 flex flex-col items-center justify-center text-gray-600"
-            style={{ transform: "scaleY(-1)" }}
-          >
-            <div className="font-medium">
-              {subscription.subscriptionType}套餐
-            </div>
-            <div className="text-sm">
-              有效期至 {subscription.subscriptionExpiredAt}
-            </div>
-          </div>
-        </header>
-      </div>
     </div>
   );
 }

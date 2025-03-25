@@ -8,7 +8,7 @@ async function Announcement() {
   const announcementData = (await announcement.json()).data;
   if (!announcementData) return null;
   return (
-    <div className="relative w-full max-w-[calc(100%-1rem)] mx-auto mt-1 text-sm bg-[#FCFCFC] border border-[#E0E0E085] rounded-lg filter drop-shadow-[0_1px_1px_rgba(0,0,0,0.05)]">
+    <div className="relative w-full max-w-[calc(100%-1rem)] mx-auto my-2 text-sm bg-[#FCFCFC] border border-[#E0E0E085] rounded-lg filter drop-shadow-[0_1px_1px_rgba(0,0,0,0.05)]">
       {/* 标题栏 */}
       <div className="p-2 flex items-center">
         <Megaphone className="w-4 h-4 mr-1 text-[#8c8c8c85]" />

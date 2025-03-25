@@ -18,7 +18,7 @@ async function HeaderServer() {
   const session = await getServerSession(authConfig);
   const authed = session ? true : false;
   return (
-    <div className="flex items-center justify-between gap-3 overflow-x-auto border-b bg-gray-100 py-2 pl-2 pr-4 md:pl-3.5 md:pr-5">
+    <div className="flex items-center justify-between gap-3 h-[57px] min-h-[57px] overflow-x-auto border-b bg-gray-100 py-2 pl-2 pr-4 md:pl-3.5 md:pr-5">
       <div className="w-[15%] flex items-center justify-start">
         <Link className="" href={"/"}>
           <img
