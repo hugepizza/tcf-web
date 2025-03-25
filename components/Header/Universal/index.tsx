@@ -13,10 +13,14 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { getServerSession } from "next-auth";
 import authConfig from "@/auth.config";
+import { headers } from "next/headers";
 
 async function HeaderServer() {
   const session = await getServerSession(authConfig);
   const authed = session ? true : false;
+  const heads = await headers();
+  const pathname = heads.get("next-url");
+
   return (
     <div className="flex items-center justify-between gap-3 h-[57px] min-h-[57px] overflow-x-auto border-b bg-gray-100 py-2 pl-2 pr-4 md:pl-3.5 md:pr-5">
       <div className="w-[15%] flex items-center justify-start">
@@ -32,14 +36,18 @@ async function HeaderServer() {
         <NavItem
           text="练习题"
           path="/resources/listening/by-suite"
-          active={true}
+          active={pathname === "/resources/listening/by-suite"}
         />
-        <NavItem text="备考攻略" path="/blog" active={true} />
+        <NavItem text="备考攻略" path="/blog" active={pathname === "/blog"} />
       </div>
       <div className="hidden sm:flex flex-row space-x-2 h-8 items-center  sm:px-2">
         {authed ? (
           <>
-            <NavItem text="做题记录" path="/history" active={false} />
+            <NavItem
+              text="做题记录"
+              path="/history"
+              active={pathname === "/history"}
+            />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button

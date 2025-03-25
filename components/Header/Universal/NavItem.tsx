@@ -33,7 +33,7 @@ function NavItem({ text, path, active, subMenu }: NavItemProps) {
     >
       {path ? (
         <button
-          onClick={() => window.location.href = path}
+          onClick={() => (window.location.href = path)}
           className={twMerge(
             "px-4 py-2 text-sm transition-colors duration-300 rounded-lg",
             isActive
