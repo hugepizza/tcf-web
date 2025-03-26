@@ -23,31 +23,32 @@ function Line({
   };
 
   const answerKeyLetter = convertAnswerKeyToLetter(answerKey);
+  
   return (
-    <div className="grid grid-cols-2 border-t-[1px] border-black-300 min-h-12 items-center text-black-900">
-      {" "}
-      {/* 默认边框 + 主要文本 */}
-      <div className="px-6 py-3 flex flex-row items-center">
-        <span className="text-black-900 font-medium">{`Q${index + 1}`}</span>{" "}
-        {/* 主要文本 */}
-        <span className="text-black-600 text-sm ml-2">
-          {" "}
-          {/* 高对比背景色用于次要文本 */}
+    <div className="grid grid-cols-1 grid-rows-[auto_1fr] overflow-hidden rounded-2xl bg-white border border-gray-100">
+      <div className="p-4">
+        <span className="mb-3 inline-block rounded-md bg-gray-200 px-2 py-1 font-mono text-sm font-bold text-gray-500">
+          {`Q${String(index + 1).padStart(2, '0')}`}
+        </span>
+        <div className="text-md mb-3 font-semibold">
           {isAudio(question) ? (
-            <audio
+            <audio  
               src={assetUrl(question)}
               controls
               controlsList="nodownload"
               preload="none"
+              className="w-full mt-2"
             />
           ) : (
             question
           )}
-        </span>
+        </div>
+        <div className="mt-4 text-sm text-gray-800">
+          答案: 
+          <span className="font-medium text-black-900">{answerKeyLetter}</span>
+          {answer && <span className="ml-2">{answer}</span>}
+        </div>
       </div>
-      <div className="px-6 py-3">{`${answerKeyLetter} ${
-        answer ? `: ${answer}` : ""
-      }`}</div>
     </div>
   );
 }

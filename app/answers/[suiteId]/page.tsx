@@ -31,25 +31,27 @@ async function AnswerPage({
   return (
     <>
       <HeaderServer />
-      <div className="grow overflow-y-scroll px-4 sm:px-16 py-2 gap-4">
-        <div className="h-8" />
-        <div className="text-[24px] font-medium text-black-800">
-          {/* 次要文本 */}
-          {answers.name}{" "}
+      <div className="mx-auto w-full relative max-w-[1200px] gap-8 overflow-clip rounded-xl py-6 md:py-20 px-2 md:px-0">
+        <div className="flex flex-col pb-3.5 items-center text-center">
+          <div>
+            <span className="my-3 flex items-center justify-center mb-4">
+              <span className="shadow-fade inline-flex items-center justify-start gap-1 rounded-full px-3.5 py-1 bg-white">
+                <p className="text-xs text-[#242424]">答案列表</p>
+              </span>
+            </span>
+          </div>
+          <div className="text-[32px] lg:text-5xl font-medium pb-3">
+            {answers.name}
+          </div>
+          <p className="max-w-md text-base text-[#898989] lg:max-w-2xl lg:text-lg">
+            查看所有题目和答案
+          </p>
         </div>
-        <div className="h-4" />
-        <div className="bg-black-100 rounded-lg border border-black-300 overflow-hidden">
-          <div className="bg-[#f5f7fa] items-center grid grid-cols-2 font-normal text-black-600 py-1">
-            {" "}
-            {/* 高对比背景色用于文本 */}
-            <div className="px-6 py-2 ">题目</div>
-            <div className="px-6 py-2">答案</div>
-          </div>
-          <div className="bg-white rounded-lg">
-            {answers.answers.map((answer, index) => (
-              <Line key={index} {...answer} index={index} />
-            ))}
-          </div>
+        
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-0 sm:gap-4 auto-rows-fr">
+          {answers.answers.map((answer, index) => (
+            <Line key={index} {...answer} index={index} />
+          ))}
         </div>
       </div>
     </>

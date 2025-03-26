@@ -125,18 +125,11 @@ function Main() {
         {currentQuestion.imageContent?.original_text_translation &&
           currentQuestion.imageContent?.questions_translation && (
             <ReadingTranslation
-              originalText={
-                currentQuestion.imageContent.original_text_translation
-              }
+              originalText={currentQuestion.imageContent.original_text_translation}
               questionText={currentQuestion.imageContent.questions_translation}
+              optionsTranslation={currentQuestion.optionsTranslation}
             />
           )}
-        {currentQuestion.optionsTranslation.map((option, index) => (
-          <div key={index}>
-            <div>{option.english}</div>
-            <div>{option.chinese}</div>
-          </div>
-        ))}
       </PracticeSidebar>
     </div>
   );
@@ -300,9 +293,11 @@ function ReadingImageContent({
 function ReadingTranslation({
   originalText,
   questionText,
+  optionsTranslation
 }: {
   originalText: string;
   questionText: string;
+  optionsTranslation?: { english: string; chinese: string }[];
 }) {
   const [isOpen, setIsOpen] = React.useState(false);
 
@@ -333,6 +328,19 @@ function ReadingTranslation({
               {questionText}
             </div>
           </div>
+          {optionsTranslation && optionsTranslation.length > 0 && (
+            <div className="bg-white rounded-md p-2 mt-1 border-gray-200 border">
+              <div className="text-sm font-medium text-gray-500 mb-1">选项：</div>
+              <div className="space-y-2">
+                {optionsTranslation.map((option, index) => (
+                  <div key={index} className="text-sm text-gray-800">
+                    <div className="font-medium">{String.fromCharCode(65 + index)}. {option.english}</div>
+                    <div className="text-gray-500 ml-4">{option.chinese}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </DisclosureContent>
       </Disclosure>
     </div>

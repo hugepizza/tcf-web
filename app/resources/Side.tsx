@@ -15,7 +15,7 @@ async function Side() {
     <div className="sm:w-1/6 hidden sm:flex flex-col gap-2 w-0 border-r-[1px] border-[#F2F2F2]">
       <div className="mt-auto">
         <header
-          className="relative flex flex-col items-center px-2 h-32"
+          className="relative flex flex-col items-center px-2 h-28"
           style={{
             background: `
               linear-gradient(to top, #dbf9ff, rgba(219, 249, 255, 0) 60%, rgba(219, 249, 255, 0)),
@@ -25,6 +25,8 @@ async function Side() {
             backgroundRepeat: "no-repeat",
             backgroundSize: "contain",
             transform: "scaleY(-1)",
+            borderTop: "1px solid transparent",
+            borderImage: "linear-gradient(to right, transparent, #00B4D8, transparent) 1"
           }}
         >
           <div
