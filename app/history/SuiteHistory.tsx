@@ -1,7 +1,9 @@
-import { apiUrl } from "@/lib/api";
-
-import SuitItem from "./SuitItem";
-
+import dayjs from "dayjs";
+import { getSuiteHistory } from "./actions";
+import { useQuery } from "@tanstack/react-query";
+import { ArrowRightIcon } from "@heroicons/react/24/outline";
+import { ArrowRightCircle, ChevronRight, StarIcon } from "lucide-react";
+import { useRouter } from "next/navigation";
 import {
   Pagination,
   PaginationContent,
@@ -11,34 +13,24 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import QueryClientProvider from "@/app/context/ClientQuery";
+import { useState } from "react";
+function SuiteHistory({ suiteId }: { suiteId: string }) {
+  const router = useRouter();
+  const itemsPerPage = 10;
+  const [currentPage, setCurrentPage] = useState(1);
 
-async function ResourcesPage({
-  params,
-  searchParams,
-}: {
-  params: Promise<{ subject: string }>;
-  searchParams: Promise<{ page?: string }>;
-}) {
-  const { subject } = await params;
-  const { page } = await searchParams;
-  const currentPage = page ? parseInt(page) : 1;
-  const itemsPerPage = 12;
-
-  const response = await fetch(
-    apiUrl(
-      `/resources/by-suite?subject=${subject.toUpperCase()}&page=${currentPage}&pageSize=${itemsPerPage}`
-    )
-  );
-  const data = (await response.json()) as {
-    data: {
-      items: any[];
-      total: number;
-    };
-  };
+  const { data, isLoading } = useQuery({
+    queryKey: ["suite-history", suiteId, currentPage, itemsPerPage],
+    queryFn: () => getSuiteHistory({ currentPage, itemsPerPage, suiteId }),
+  });
+  if (isLoading)
+    return (
+      <div className="flex justify-center items-center h-full">Loading...</div>
+    );
+  if (!data?.data) return null;
 
   const totalPages = Math.ceil(data.data.total / itemsPerPage);
-
+  console.log("totalPages", JSON.stringify(data.data));
   // Generate page numbers to show
   const generatePaginationItems = () => {
     const items = [];
@@ -83,28 +75,47 @@ async function ResourcesPage({
   };
 
   return (
-    <QueryClientProvider>
-      <div className="grow overflow-y-scroll px-2 sm:px-10 py-4 sm:py-10 bg-gray-50/50">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {data.data.items.map((item, index) => (
-            <SuitItem
-              key={item.id}
-              suit={item}
-              index={index + 1}
-              questionCount={item.questionCount}
-              duration={item.duration}
-              subject={subject.toUpperCase()}
-            />
-          ))}
+    <div className="w-full h-full flex flex-col px-2 overflow-y-scroll">
+      {data.data.items.map((item) => (
+        <div
+          key={item.practiceId}
+          className="flex justify-center flex-col gap-4 py-4 border-b border-gray-200"
+        >
+          <div
+            key={item.practiceId}
+            className="flex flex-row w-full h-full justify-between"
+          >
+            <div className="flex flex-row gap-2 items-center">
+              {item.score ? (
+                <div className="flex flex-row gap-2 items-center">
+                  <div>
+                    <span className="text-gray-500">已完成 </span>
+                    <span className="text-gray-900 font-bold">
+                      {item.score}分
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <span className="text-gray-500">未完成</span>
+              )}
+            </div>
+            <div className="flex flex-row gap-2 items-center">
+              <div>{dayjs(item.createdAt).format("YYYY-MM-DD")}</div>
+              <ChevronRight
+                className="w-4 h-4 cursor-pointer"
+                onClick={() => {
+                  router.push(`/practice/${item.practiceId}`);
+                }}
+              />
+            </div>
+          </div>
         </div>
-      </div>
-
+      ))}
       <div className="w-full px-4 py-2">
         <Pagination>
           <PaginationContent>
             <PaginationItem>
               <PaginationPrevious
-                href={currentPage > 1 ? `?page=${currentPage - 1}` : "#"}
                 aria-disabled={currentPage === 1}
                 className={
                   currentPage === 1 ? "pointer-events-none opacity-50" : ""
@@ -118,8 +129,10 @@ async function ResourcesPage({
                   <PaginationEllipsis />
                 ) : (
                   <PaginationLink
-                    href={`?page=${pageNum}`}
                     isActive={currentPage === pageNum}
+                    onClick={() =>
+                      setCurrentPage(parseInt(pageNum.toString(), 10))
+                    }
                   >
                     {pageNum}
                   </PaginationLink>
@@ -129,9 +142,7 @@ async function ResourcesPage({
 
             <PaginationItem>
               <PaginationNext
-                href={
-                  currentPage < totalPages ? `?page=${currentPage + 1}` : "#"
-                }
+                onClick={() => setCurrentPage(currentPage + 1)}
                 aria-disabled={currentPage === totalPages}
                 className={
                   currentPage === totalPages
@@ -143,8 +154,8 @@ async function ResourcesPage({
           </PaginationContent>
         </Pagination>
       </div>
-    </QueryClientProvider>
+    </div>
   );
 }
 
-export default ResourcesPage;
+export default SuiteHistory;
