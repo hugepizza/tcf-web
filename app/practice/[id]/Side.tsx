@@ -27,7 +27,6 @@ function Side() {
           返回
         </Button>
       </div>
-      <div className="w-full px-4 h-[1px] bg-gray-100" />
 
       {isSubmitted && (
         <>

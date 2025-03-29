@@ -44,67 +44,77 @@ function Main() {
   );
   console.log("currentQuestion.imageContent", currentQuestion.imageContent);
   return (
-    <div className="flex w-full h-full flex-col lg:flex-row">
+    <div className="flex w-full h-full flex-col lg:flex-row ">
       <div className="flex flex-col flex-1 bg-gray-50">
         <PracticeHeader
           questionIndex={currentQuestionIndex}
           difficulty={currentQuestion.difficulty}
           score={currentQuestion.score}
         />
-        <div className="grow flex flex-col">
-          <div className="px-3 pt-3 flex flex-col items-center grow overflow-auto">
-            <ListeningImageContent question={currentQuestion} />
-            <div className="flex flex-col w-full">
-              <div className="grow overflow-auto flex justify-center">
-                <ReadingImageContent question={currentQuestion} />
-              </div>
-            </div>
-          </div>
-          <AnswerCard>
-            {currentQuestion.subject === Subject.READING &&
-              currentQuestion.imageContent?.questions && (
-                <div className="w-full bg-gray-50 rounded-lg p-4 border border-gray-100">
-                  <div className="text-sm text-gray-500 mb-1">问题：</div>
-                  <div className="text-lg text-gray-900">
-                    {currentQuestion.imageContent.questions}
+        <div className="grow flex flex-col min-h-0">
+          <div className="grow flex flex-col min-h-0">
+            <div className="grow overflow-auto">
+              <div className="h-full flex flex-col items-center py-2">
+                <ListeningImageContent question={currentQuestion} />
+                <div className="flex flex-col w-full">
+                  <div className="flex justify-center">
+                    <ReadingImageContent question={currentQuestion} />
                   </div>
                 </div>
-              )}
-            {/* 题干*/}
-            {currentQuestion.stem && (
-              <div className="font-semibold text-[#434343] text-lg">
-                {currentQuestion.stem}
               </div>
-            )}
-            {/* 选项*/}
-            <div className="w-full flex flex-col gap-2">
-              {currentQuestion.options.map((option, index) => (
-                <Option
-                  key={index}
-                  index={index}
-                  content={option}
-                  isSubmitted={isSubmitted}
-                  userAnswer={
-                    isSubmitted
-                      ? clientSideAnswers.find(
-                          (answer) => answer.questionId === currentQuestion.id
-                        )?.answer ?? ""
-                      : clientSideCurrentAnswer
-                  }
-                  answerKey={
-                    clientSideAnswers.find(
-                      (answer) => answer.questionId === currentQuestion.id
-                    )?.answerKey ?? ""
-                  }
-                  readOnly={isClientSideReadOnly}
-                  setUserAnswer={setClientSideCurrentAnswer}
-                />
-              ))}
             </div>
-          </AnswerCard>
+            <div className="flex-none">
+              <AnswerCard>
+                {currentQuestion.subject === Subject.READING &&
+                  currentQuestion.imageContent?.questions && (
+                    <div className="w-full bg-gray-50 rounded-lg p-4 border border-gray-100">
+                      <div className="text-sm text-gray-500 mb-1">问题：</div>
+                      <div className="text-lg text-gray-900">
+                        {currentQuestion.imageContent.questions}
+                      </div>
+                    </div>
+                  )}
+                {/* 题干*/}
+                {currentQuestion.stem && (
+                  <div className="font-semibold text-[#434343] text-lg">
+                    {currentQuestion.stem}
+                  </div>
+                )}
+                {/* 选项*/}
+                <div className="w-full flex flex-col gap-2">
+                  {currentQuestion.options.map((option, index) => (
+                    <Option
+                      key={index}
+                      index={index}
+                      content={option}
+                      isSubmitted={isSubmitted}
+                      userAnswer={
+                        isSubmitted
+                          ? clientSideAnswers.find(
+                              (answer) => answer.questionId === currentQuestion.id
+                            )?.answer ?? ""
+                          : clientSideCurrentAnswer
+                      }
+                      answerKey={
+                        clientSideAnswers.find(
+                          (answer) => answer.questionId === currentQuestion.id
+                        )?.answerKey ?? ""
+                      }
+                      readOnly={isClientSideReadOnly}
+                      setUserAnswer={setClientSideCurrentAnswer}
+                    />
+                  ))}
+                </div>
+              </AnswerCard>
+            </div>
+          </div>
         </div>
       </div>
-      <PracticeSidebar>
+      <div className="lg:max-w-[400px] w-full lg:border-l lg:border-gray-100 lg:h-full overflow-auto">
+        <div className="sticky top-0 bg-white text-normal font-medium p-4 h-14 border-b border-gray-100 bg-clip-text text-transparent bg-gradient-to-r from-[#FF2442] to-[#FF6F7F] flex items-center gap-2 z-10">
+          <SparklesSoft className="w-6 h-6" />
+          智能辅助
+        </div>
         {currentQuestion.audio && (
           <div className="bg-gray-50 rounded-lg p-1 m-2">
             <div className="text-sm h-8 font-medium text-gray-500 flex items-center gap-1 px-2">
@@ -130,19 +140,34 @@ function Main() {
               optionsTranslation={currentQuestion.optionsTranslation}
             />
           )}
-      </PracticeSidebar>
+      </div>
     </div>
   );
 }
 
-function PracticeSidebar({ children }: { children: React.ReactNode }) {
+function PracticeHeader({
+  questionIndex,
+  difficulty,
+  score,
+}: {
+  questionIndex: number;
+  difficulty: string;
+  score: number;
+}) {
   return (
-    <div className="lg:max-w-[400px] w-full lg:border-l lg:border-gray-100">
-      <div className="text-normal font-medium p-4 h-14 border-b border-gray-100 bg-clip-text text-transparent bg-gradient-to-r from-[#FF2442] to-[#FF6F7F] flex items-center gap-2">
-        <SparklesSoft className="w-6 h-6" />
-        智能辅助
+    <div className="text-lg flex flex-wrap items-center gap-3 sm:gap-6 px-3 py-4 h-auto sm:h-14 bg-white border-b border-gray-100">
+      <div className="flex items-center gap-2">
+        <AlignLeft className="w-4 h-4" />
+        <span className="font-medium">Question {questionIndex + 1}</span>
       </div>
-      {children}
+      <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-gray-500 text-sm sm:text-base">
+        <div>
+          难度：<span className="text-gray-700">{difficulty}</span>
+        </div>
+        <div>
+          分值：<span className="text-gray-700">{score}分</span>
+        </div>
+      </div>
     </div>
   );
 }
@@ -244,7 +269,7 @@ function ListeningImageContent({
       className="h-full w-auto"
       src={`${process.env.NEXT_PUBLIC_ASSETS_DOMAIN}/${question.image}`}
       alt="listening"
-      sizes="100vh"
+      sizes="50vh"
     />
   );
 }
@@ -263,9 +288,9 @@ function ReadingImageContent({
   }
   if (showText) {
     return (
-      <div className="w-full h-full p-0 lg:p-12">
-        <div className="bg-white relative rounded-lg p-6 shadow-[0_1px_5px_-4px_rgba(19,19,22,0.7),0_4px_8px_rgba(32,42,54,0.05)] ring-1 ring-gray-900/7.5 transition-shadow hover:shadow-[0_1px_7px_-4px_rgba(19,19,22,0.8),0_4px_11px_rgba(32,42,54,0.05)] hover:ring-gray-900/12.5 dark:bg-gray-900 dark:shadow-[0_-1px_rgba(255,255,255,0.06),0_4px_8px_rgba(0,0,0,0.05),0_0_0_1px_rgba(255,255,255,0.1),0_1px_6px_-4px_#000] max-h-[320px] overflow-y-auto">
-          <div className="whitespace-pre-line text-xl font-semibold text-[#595959] max-w-full break-words">
+      <div className="w-full h-full p-2 sm:p-4 lg:p-8 overflow-hidden">
+        <div className="bg-white relative rounded-lg p-4 sm:p-6 shadow-[0_1px_5px_-4px_rgba(19,19,22,0.7),0_4px_8px_rgba(32,42,54,0.05)] ring-1 ring-gray-900/7.5 transition-shadow hover:shadow-[0_1px_7px_-4px_rgba(19,19,22,0.8),0_4px_11px_rgba(32,42,54,0.05)] hover:ring-gray-900/12.5 dark:bg-gray-900 dark:shadow-[0_-1px_rgba(255,255,255,0.06),0_4px_8px_rgba(0,0,0,0.05),0_0_0_1px_rgba(255,255,255,0.1),0_1px_6px_-4px_#000] max-h-[30vh] sm:h-full overflow-y-auto">
+          <div className="whitespace-pre-line text-base sm:text-xl font-semibold text-[#595959] max-w-full break-words">
             {question.imageContent?.original_text}
           </div>
         </div>
@@ -349,35 +374,8 @@ function ReadingTranslation({
 
 function AnswerCard({ children }: { children: React.ReactNode }) {
   return (
-    <div className="border-t border-gray-100 bg-white mx-2 mb-2 rounded-md p-6 flex flex-col items-center gap-4">
+    <div className="border-t border-gray-100 bg-white mx-2 mb-2 rounded-md p-3 sm:p-6 flex flex-col items-center gap-3 sm:gap-4">
       {children}
-    </div>
-  );
-}
-
-function PracticeHeader({
-  questionIndex,
-  difficulty,
-  score,
-}: {
-  questionIndex: number;
-  difficulty: string;
-  score: number;
-}) {
-  return (
-    <div className="text-lg flex items-center gap-6 px-3 py-4 h-14 bg-white border-b border-gray-100">
-      <div className="flex items-center gap-2">
-        <AlignLeft className="w-4 h-4" />
-        <span className="font-medium">Question {questionIndex + 1}</span>
-      </div>
-      <div className="flex items-center gap-4 text-gray-500 text-base">
-        <div>
-          难度：<span className="text-gray-700">{difficulty}</span>
-        </div>
-        <div>
-          分值：<span className="text-gray-700">{score}分</span>
-        </div>
-      </div>
     </div>
   );
 }

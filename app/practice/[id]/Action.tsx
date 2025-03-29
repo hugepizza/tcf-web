@@ -79,8 +79,8 @@ function Action() {
     practice.questions[practice.questions.length - 1].id;
 
   return (
-    <div className="border-t-[1px] border-[#F2F2F2] inline-flex gap-2 px-3 py-4 h-[64px] items-center justify-between bg-white">
-      <div className="flex text-sm text-[#595959] items-center">
+    <div className="border-t-[1px] border-[#F2F2F2] flex gap-2 px-3 py-4 h-[64px] items-center justify-between bg-white w-full">
+      <div className="flex text-sm text-[#595959] items-center gap-2">
         {isSubmitted && (
           <div>
             已交卷 用时
@@ -193,7 +193,7 @@ function LastQuestionButton({
       onClick={() => previousQuestion()}
     >
       <ArrowLeft className="w-4 h-4" />
-      上一题
+      <span className="hidden md:inline">上一题</span>
     </Button>
   );
 }
@@ -268,7 +268,7 @@ function NextButton({
       className={buttonBaseClass}
       onClick={() => nextQuestion()}
     >
-      下一题
+      <span className="hidden md:inline">下一题</span>
       <ArrowRight className="w-4 h-4" />
     </Button>
   );
