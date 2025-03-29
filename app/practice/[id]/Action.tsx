@@ -20,7 +20,8 @@ import { useToast } from "@/hooks/use-toast";
 import { checkPoint } from "./actions";
 import { useRouter } from "next/navigation";
 
-const buttonBaseClass = "group relative isolate inline-flex items-center justify-center overflow-hidden text-left font-medium transition duration-300 ease-[cubic-bezier(0.4,0.36,0,1)] before:duration-300 before:ease-[cubic-bezier(0.4,0.36,0,1)] before:transtion-opacity rounded-md shadow-[0_1px_theme(colors.white/0.07)_inset,0_1px_3px_theme(colors.gray.900/0.2)] before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:rounded-md before:bg-gradient-to-b before:from-white/20 before:opacity-50 hover:before:opacity-100 after:pointer-events-none after:absolute after:inset-0 after:-z-10 after:rounded-md after:bg-gradient-to-b after:from-white/10 after:from-[46%] after:to-[54%] after:mix-blend-overlay text-sm px-3 py-[0.1875rem] ring-1 bg-[#1782FF] text-white ring-[#1782FF] hover:bg-[#1782FF] hover:text-white hover:ring-[#1782FF]";
+const buttonBaseClass =
+  "group relative isolate inline-flex items-center justify-center overflow-hidden text-left font-medium transition duration-300 ease-[cubic-bezier(0.4,0.36,0,1)] before:duration-300 before:ease-[cubic-bezier(0.4,0.36,0,1)] before:transtion-opacity rounded-md shadow-[0_1px_theme(colors.white/0.07)_inset,0_1px_3px_theme(colors.gray.900/0.2)] before:pointer-events-none before:absolute before:inset-0 before:-z-10 before:rounded-md before:bg-gradient-to-b before:from-white/20 before:opacity-50 hover:before:opacity-100 after:pointer-events-none after:absolute after:inset-0 after:-z-10 after:rounded-md after:bg-gradient-to-b after:from-white/10 after:from-[46%] after:to-[54%] after:mix-blend-overlay text-sm px-3 py-[0.1875rem] ring-1 bg-[#1782FF] text-white ring-[#1782FF] hover:bg-[#1782FF] hover:text-white hover:ring-[#1782FF]";
 
 function Action() {
   const {
@@ -84,20 +85,11 @@ function Action() {
         {isSubmitted && (
           <div>
             已交卷 用时
-            {Math.floor(
-              dayjs(practice.submittedAt).diff(
-                dayjs(practice.createdAt),
-                "seconds"
-              ) / 60
-            )}
+            {Math.floor(practice.durationConsumed / 60)}
             分钟
-            {Math.floor(
-              dayjs(practice.submittedAt).diff(
-                dayjs(practice.createdAt),
-                "seconds"
-              ) % 60
-            )}
-            秒
+            {Math.floor(practice.durationConsumed % 60)}秒{" 总时长"}
+            {Math.floor(practice.duration / 60)}
+            分钟
           </div>
         )}
         <Timer
@@ -106,7 +98,7 @@ function Action() {
           isClientSideTimeOut={isClientSideTimeOut}
         />
       </div>
-      
+
       <div className="flex items-center gap-2">
         <LastQuestionButton
           isClientSideTimeOut={isClientSideTimeOut}
@@ -216,9 +208,7 @@ function SubmitButton({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button
-          className={buttonBaseClass}
-        >
+        <Button className={buttonBaseClass}>
           {isClientSideTimeOut ? "时间结束 请交卷" : "交卷"}
         </Button>
       </DialogTrigger>
