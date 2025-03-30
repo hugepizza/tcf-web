@@ -71,7 +71,7 @@ async function AnswerPage({
       </div>
 
       <div className="bg-gray-50 relative">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 auto-rows-fr relative isolate pt-2 lg:pt-4 xl:pt-16 mx-auto w-full px-2 md:px-0 sm:max-w-[40rem] md:max-w-[48rem] lg:max-w-[64rem] xl:max-w-[80rem] overflow-hidden min-h-[360px] lg:min-h-0 md:px-4 xl:px-0">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 auto-rows-fr relative isolate pt-2 lg:pt-4 xl:pt-16 mx-auto w-full px-2 sm:max-w-[40rem] md:max-w-[48rem] lg:max-w-[64rem] xl:max-w-[80rem] overflow-hidden min-h-[360px] lg:min-h-0 md:px-4 xl:px-0">
           {answers.answers.map((answer, index) => (
             <Line key={index} {...answer} index={index} />
           ))}
