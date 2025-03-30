@@ -41,7 +41,7 @@ function Main() {
   console.log(
     clientSideAnswers.find((answer) => answer.questionId === currentQuestion.id)
   );
-  console.log("currentQuestion.imageContent", currentQuestion.imageContent);
+  console.log("env", process.env.NEXT_PUBLIC_ASSETS_DOMAIN);
   return (
     <div className="flex w-full h-full flex-col lg:flex-row ">
       <div className="flex flex-col flex-1 bg-gray-50">
