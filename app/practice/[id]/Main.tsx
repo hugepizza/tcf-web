@@ -7,7 +7,6 @@ import headphone from "@/images/headphone.png";
 import Image from "next/image";
 import { Subject } from "@/shared/enum";
 
-import { AudioPlayerWrapper } from "@/components/audio-player";
 import { usePractice } from "./context";
 import { notFound } from "next/navigation";
 import { cn } from "@/lib/utils";
@@ -89,11 +88,11 @@ function Main() {
                       content={option}
                       isSubmitted={isSubmitted}
                       userAnswer={
-                        isSubmitted
-                          ? clientSideAnswers.find(
-                              (answer) => answer.questionId === currentQuestion.id
-                            )?.answer ?? ""
-                          : clientSideCurrentAnswer
+                        clientSideCurrentAnswer ||
+                        clientSideAnswers.find(
+                          (answer) => answer.questionId === currentQuestion.id
+                        )?.answer ||
+                        ""
                       }
                       answerKey={
                         clientSideAnswers.find(
@@ -135,7 +134,9 @@ function Main() {
         {currentQuestion.imageContent?.original_text_translation &&
           currentQuestion.imageContent?.questions_translation && (
             <ReadingTranslation
-              originalText={currentQuestion.imageContent.original_text_translation}
+              originalText={
+                currentQuestion.imageContent.original_text_translation
+              }
               questionText={currentQuestion.imageContent.questions_translation}
               optionsTranslation={currentQuestion.optionsTranslation}
             />
@@ -217,6 +218,9 @@ function Option({
       )}
       onClick={() => {
         if (readOnly) {
+          return;
+        }
+        if (isSubmitted) {
           return;
         }
         setUserAnswer(index.toString());
@@ -318,7 +322,7 @@ function ReadingImageContent({
 function ReadingTranslation({
   originalText,
   questionText,
-  optionsTranslation
+  optionsTranslation,
 }: {
   originalText: string;
   questionText: string;
@@ -355,11 +359,15 @@ function ReadingTranslation({
           </div>
           {optionsTranslation && optionsTranslation.length > 0 && (
             <div className="bg-white rounded-md p-2 mt-1 border-gray-200 border">
-              <div className="text-sm font-medium text-gray-500 mb-1">选项：</div>
+              <div className="text-sm font-medium text-gray-500 mb-1">
+                选项：
+              </div>
               <div className="space-y-2">
                 {optionsTranslation.map((option, index) => (
                   <div key={index} className="text-sm text-gray-800">
-                    <div className="font-medium">{String.fromCharCode(65 + index)}. {option.english}</div>
+                    <div className="font-medium">
+                      {String.fromCharCode(65 + index)}. {option.english}
+                    </div>
                     <div className="text-gray-500 ml-4">{option.chinese}</div>
                   </div>
                 ))}

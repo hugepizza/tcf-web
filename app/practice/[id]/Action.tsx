@@ -1,5 +1,5 @@
 "use client";
-import { ArrowLeft, Clock } from "lucide-react";
+import { ArrowLeft, Clock, Save } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
@@ -34,6 +34,7 @@ function Action() {
     setClientSideTimeOut,
     setClientSideReadOnly,
     submitPractice,
+    saveQuestion,
   } = usePractice();
 
   const [remainingSeconds, setRemainingSeconds] = useState(() => {
@@ -100,11 +101,17 @@ function Action() {
       </div>
 
       <div className="flex items-center gap-2">
+        <SaveButton
+          isClientSideTimeOut={isClientSideTimeOut}
+          saveQuestion={saveQuestion}
+          isSubmitted={isSubmitted}
+        />
         <LastQuestionButton
           isClientSideTimeOut={isClientSideTimeOut}
           isFirstQuestion={isFirstQuestion}
           previousQuestion={previousQuestion}
         />
+
         <SubmitButton
           isLastQuestion={isLastQuestion}
           isClientSideTimeOut={isClientSideTimeOut}
@@ -202,7 +209,6 @@ function SubmitButton({
   submitPractice: () => Promise<void>;
 }) {
   const { toast } = useToast();
-  const router = useRouter();
   if (isSubmitted) return null;
   if (!isClientSideTimeOut && !isLastQuestion) return null;
   return (
@@ -260,6 +266,28 @@ function NextButton({
     >
       <span className="hidden md:inline">下一题</span>
       <ArrowRight className="w-4 h-4" />
+    </Button>
+  );
+}
+
+function SaveButton({
+  isClientSideTimeOut,
+  isSubmitted,
+  saveQuestion,
+}: {
+  isClientSideTimeOut: boolean;
+  isSubmitted: boolean;
+  saveQuestion: () => Promise<void>;
+}) {
+  if (isClientSideTimeOut || isSubmitted) return null;
+  return (
+    <Button
+      hidden={isClientSideTimeOut}
+      className={buttonBaseClass}
+      onClick={() => saveQuestion()}
+    >
+      <span className="hidden md:inline">保存</span>
+      <Save className="w-4 h-4" />
     </Button>
   );
 }

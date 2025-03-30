@@ -49,13 +49,11 @@ async function AnswerPage({
               查看所有题目和答案
             </p>
 
-            <div className="mt-8 flex gap-x-4">
-              {/* 添加按钮组件 */}
-            </div>
+            <div className="mt-8 flex gap-x-4">{/* 添加按钮组件 */}</div>
           </div>
 
           {/* 右侧图片 - 40% */}
-          <div className="lg:col-span-3 absolute lg:right-0 lg:w-[45%] mt-12 lg:mt-8 lg:-mt-12">
+          <div className="lg:col-span-3 absolute lg:right-0 lg:w-[45%] mt-12 lg:mt-8">
             <div className="-mt-40 flex justify-center lg:mt-0">
               <img
                 alt=""
@@ -64,7 +62,7 @@ async function AnswerPage({
                 decoding="async"
                 className="pointer-events-none w-full max-w-none select-none"
                 src="/tcfgo.webp"
-                style={{ color: 'transparent' }}
+                style={{ color: "transparent" }}
               />
               <div className="absolute -bottom-12 sm:bottom-8 xl:bottom-20 left-0 right-0 h-1/4 bg-gradient-to-b from-transparent to-[#f3f5f9]"></div>
             </div>

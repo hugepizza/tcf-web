@@ -6,11 +6,13 @@ const submitAnswer = async ({
   answer,
   questionId,
   submitPractice,
+  moveToNextQuestion,
 }: {
   practiceId: string;
   answer: string;
   questionId: string;
   submitPractice: boolean;
+  moveToNextQuestion: boolean;
 }) => {
   await fetchMutate<{ questionId: string }>({
     path: `/practices/${practiceId}`,
@@ -19,6 +21,7 @@ const submitAnswer = async ({
       answer,
       questionId,
       submitPractice,
+      moveToNextQuestion,
     },
   });
 };

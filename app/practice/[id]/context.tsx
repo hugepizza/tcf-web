@@ -19,6 +19,7 @@ interface PracticeContextType {
   setClientSideTimeOut: (timeOut: boolean) => void;
   setClientSideReadOnly: (readOnly: boolean) => void;
   submitPractice: () => Promise<void>;
+  saveQuestion: () => Promise<void>;
 }
 const PracticeContext = createContext<PracticeContextType>({
   practice: {} as Practice,
@@ -35,6 +36,7 @@ const PracticeContext = createContext<PracticeContextType>({
   setClientSideTimeOut: (timeOut: boolean) => {},
   setClientSideReadOnly: (readOnly: boolean) => {},
   submitPractice: async () => {},
+  saveQuestion: async () => {},
 });
 
 export default function PracticeProvider({
@@ -69,6 +71,7 @@ export default function PracticeProvider({
       answer: clientSideCurrentAnswer,
       questionId: clientSideCurrentQuestion,
       submitPractice: true,
+      moveToNextQuestion: true,
     });
     // 提交后跳转
     console.log("提交后跳转");
@@ -80,7 +83,6 @@ export default function PracticeProvider({
   ]);
 
   const nextQuestion = useCallback(async () => {
-    console.log("nextQuestion isClientSideReadOnly:", isClientSideReadOnly);
     const nextQuestionIndex =
       practice.questions.findIndex(
         (question) => question.id === clientSideCurrentQuestion
@@ -97,6 +99,7 @@ export default function PracticeProvider({
         answer: clientSideCurrentAnswer,
         questionId: clientSideCurrentQuestion,
         submitPractice: false,
+        moveToNextQuestion: true,
       });
       setClientSideAnswers((prev) => {
         const next = prev.map((answer) => {
@@ -118,6 +121,34 @@ export default function PracticeProvider({
     clientSideCurrentQuestion,
     isClientSideReadOnly,
     submitPractice,
+  ]);
+
+  const saveQuestion = useCallback(async () => {
+    if (!isClientSideReadOnly) {
+      await submitAnswer({
+        practiceId: practice.id,
+        answer: clientSideCurrentAnswer,
+        questionId: clientSideCurrentQuestion,
+        submitPractice: false,
+        moveToNextQuestion: false,
+      });
+      setClientSideAnswers((prev) => {
+        const next = prev.map((answer) => {
+          if (answer.questionId === clientSideCurrentQuestion) {
+            return {
+              ...answer,
+              answer: clientSideCurrentAnswer,
+            };
+          }
+          return answer;
+        });
+        return next;
+      });
+    }
+  }, [
+    clientSideCurrentAnswer,
+    clientSideCurrentQuestion,
+    isClientSideReadOnly,
   ]);
   const jumpToQuestion = (questionId: string) => {
     setClientSideCurrentQuestion(questionId);
@@ -154,6 +185,7 @@ export default function PracticeProvider({
         setClientSideTimeOut,
         setClientSideReadOnly,
         submitPractice,
+        saveQuestion,
       }}
     >
       {children}
