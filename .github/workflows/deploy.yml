@@ -26,8 +26,9 @@ jobs:
       - name: Build and tag the Docker image
         env:
           NEXT_PUBLIC_BACKEND_URL: "https://api.tcfgo.com/v1"
+          NEXT_PUBLIC_ASSETS_DOMAIN: "https://assets.tcfgo.com"
         run: |
-          docker build . --build-arg NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL -t ${{ secrets.DOCKER_REPO }}/tcf-web:${{ github.sha }}
+          docker build . --build-arg NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL --build-arg NEXT_PUBLIC_ASSETS_DOMAIN=$NEXT_PUBLIC_ASSETS_DOMAIN -t ${{ secrets.DOCKER_REPO }}/tcf-web:${{ github.sha }}
           docker tag ${{ secrets.DOCKER_REPO }}/tcf-web:${{ github.sha }} ${{ secrets.DOCKER_REPO }}/tcf-web:latest
 
       # Step 5: Push the Docker image to Docker Hub (or your private registry)
