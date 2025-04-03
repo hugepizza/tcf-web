@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import SuiteHistory from "@/app/history/SuiteHistory";
 import { useState } from "react";
+import { Subject } from "@/shared/enum";
 
 function SuitItem({
   suit,
@@ -78,18 +79,22 @@ function SuitItem({
                 开始做题
               </Button>
 
-              <Button
-                variant="outline"
-                size="sm"
-                asChild
-                className=" rounded-full px-4 py-2 text-[13px] font-semibold transition-all flex items-center justify-center cursor-pointer bg-gradient-to-b from-white/[.105] to-white/[.15] backdrop-blur-[20px] text-gray-600 hover:text-gray-800 border border-gray-200/75"
-                onClick={(e) => e.stopPropagation()}
-                style={{
-                  boxShadow: "rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset",
-                }}
-              >
-                <Link href={`/answers/${suit.id}`}>答案</Link>
-              </Button>
+              {[Subject.READING, Subject.LISTENING].includes(
+                subject as Subject
+              ) && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  asChild
+                  className=" rounded-full px-4 py-2 text-[13px] font-semibold transition-all flex items-center justify-center cursor-pointer bg-gradient-to-b from-white/[.105] to-white/[.15] backdrop-blur-[20px] text-gray-600 hover:text-gray-800 border border-gray-200/75"
+                  onClick={(e) => e.stopPropagation()}
+                  style={{
+                    boxShadow: "rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset",
+                  }}
+                >
+                  <Link href={`/answers/${suit.id}`}>答案</Link>
+                </Button>
+              )}
             </div>
           </div>
         </div>

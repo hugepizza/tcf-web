@@ -2,7 +2,7 @@
 import { Practice } from "@/shared/schemas/practice";
 import { createContext, useCallback, useContext, useState } from "react";
 import { submitAnswer } from "./actions";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 interface PracticeContextType {
   practice: Practice;
@@ -74,8 +74,9 @@ export default function PracticeProvider({
       moveToNextQuestion: true,
     });
     // 提交后跳转
+    setClientSideReadOnly(true);
     console.log("提交后跳转");
-    router.push(`/practice/${practice.id}`);
+    window.location.reload();
   }, [
     clientSideCurrentAnswer,
     clientSideCurrentQuestion,
@@ -151,6 +152,8 @@ export default function PracticeProvider({
     isClientSideReadOnly,
   ]);
   const jumpToQuestion = (questionId: string) => {
+    console.log("jumpToQuestion", questionId);
+    setClientSideCurrentAnswer("");
     setClientSideCurrentQuestion(questionId);
   };
   const previousQuestion = useCallback(async () => {

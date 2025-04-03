@@ -26,7 +26,8 @@ async function Side() {
             backgroundSize: "contain",
             transform: "scaleY(-1)",
             borderTop: "1px solid transparent",
-            borderImage: "linear-gradient(to right, transparent, #00B4D8, transparent) 1"
+            borderImage:
+              "linear-gradient(to right, transparent, #00B4D8, transparent) 1",
           }}
         >
           <div
@@ -41,7 +42,7 @@ async function Side() {
             </div>
           </div>
         </header>
-      </div>  
+      </div>
       <div className="flex flex-col h-full gap-3">
         <Link href="/" className="w-full">
           <div
@@ -67,6 +68,13 @@ async function Side() {
         >
           <Image src="/side/E.png" alt="reading" width={24} height={24} />
           阅读
+        </Link>
+        <Link
+          href="/resources/writing/by-suite"
+          className="font-medium text-base w-full px-4 py-2 flex items-center gap-2 text-gray-600 transition-all cursor-pointer backdrop-blur-[20px] hover:text-gray-800 hover:translate-x-1"
+        >
+          <Image src="/side/E.png" alt="writing" width={24} height={24} />
+          写作
         </Link>
       </div>
       <div className="h-[1px] w-full bg-[#F2F2F2]" />

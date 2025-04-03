@@ -1,20 +1,10 @@
 import { QuestionDifficulty, Subject } from "@/shared/enum";
 import { z } from "zod";
 import { dateStringSchema } from "./base-schema";
+import { imageContentSchema, writingContentSchema } from "./question";
+import { optionsTranslationSchema } from "./question";
 
 export type Practice = z.infer<typeof practiceSchema>;
-
-export const optionsTranslationSchema = z.object({
-  chinese: z.string(),
-  english: z.string(),
-});
-
-export const imageContentSchema = z.object({
-  original_text: z.string().optional().default(""),
-  questions_translation: z.string().optional().default(""),
-  questions: z.string().optional().default(""),
-  original_text_translation: z.string().optional().default(""),
-});
 
 export const gradeSchema = z.object({
   score: z.number(),
@@ -50,6 +40,7 @@ export const practiceSchema = z.object({
       difficulty: z.nativeEnum(QuestionDifficulty),
       score: z.number(),
       subject: z.nativeEnum(Subject),
+      writingContent: writingContentSchema.nullable(),
     })
   ),
   grade: gradeSchema.nullable(),

@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import Link from "next/link";
 import { DeleteOne } from "./Delete";
 import { GradeTag } from "./Tag";
+import { Subject } from "@/shared/enum";
 
 function PracticeItem({
   score,
@@ -12,6 +13,7 @@ function PracticeItem({
   suiteName,
   practiceMode,
   practiceId,
+  subject,
 }: {
   score: number | null;
   index: number;
@@ -19,6 +21,7 @@ function PracticeItem({
   suiteName: string;
   practiceMode: string;
   practiceId: string;
+  subject: Subject;
 }) {
   return (
     <TableRow className="cursor-pointer">
@@ -31,7 +34,7 @@ function PracticeItem({
         </div>
         <div className="flex flex-row gap-[10px] items-center">
           <div>{dayjs(date).format("YYYY-MM-DD")}</div>
-          <GradeTag score={score} practiceId={practiceId} />
+          <GradeTag score={score} practiceId={practiceId} subject={subject} />
           <DeleteOne practiceId={practiceId} />
         </div>
       </TableCell>

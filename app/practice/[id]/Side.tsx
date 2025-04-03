@@ -5,6 +5,7 @@ import { usePractice } from "./context";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { Grade } from "@/shared/schemas/practice";
+import { Subject } from "@/shared/enum";
 
 function Side() {
   const {
@@ -30,7 +31,12 @@ function Side() {
 
       {isSubmitted && (
         <>
-          {practice.grade && <Grades grade={practice.grade} />}
+          {practice.grade && (
+            <Grades
+              grade={practice.grade}
+              subject={practice.questions[0]?.subject}
+            />
+          )}
           <div className="w-full px-4 h-[1px] bg-[#E6E6E6]" />
         </>
       )}
@@ -47,7 +53,9 @@ function Side() {
                 <div className="bg-[#434343] w-4 h-4 rounded-md"></div>已答
               </div>
             </>
-          ) : (
+          ) : [Subject.LISTENING, Subject.READING].includes(
+              practice.questions[0]?.subject
+            ) ? (
             <>
               <div className="inline-flex gap-1 items-center">
                 <div className="bg-[#18A058] w-4 h-4 rounded-md"></div>正确
@@ -56,15 +64,29 @@ function Side() {
                 <div className="bg-[#FF2442] w-4 h-4 rounded-md"></div>错误
               </div>
             </>
+          ) : (
+            <></>
           )}
         </div>
       </div>
-      <div className="px-3 grid grid-cols-6 gap-1 text-center">
+      <div
+        className={cn(
+          "px-3 grid gap-1 text-center",
+          practice.questions[0]?.subject === Subject.WRITING
+            ? "grid-cols-1"
+            : "grid-cols-6"
+        )}
+      >
         {practice.questions.map((question, index) => (
           <div
             key={question.id}
             className={cn(
-              "aspect-square text-[#595959]  font-medium w-full h-full bg-[#F2F2F2] rounded-md flex items-center justify-center cursor-pointer",
+              "text-[#595959]  font-medium w-full h-full bg-[#F2F2F2] rounded-md flex items-center justify-center cursor-pointer",
+              `${
+                [Subject.LISTENING, Subject.READING].includes(question.subject)
+                  ? "aspect-square"
+                  : "h-8"
+              }`,
               !isSubmitted &&
                 clientSideAnswers.find(
                   (answer) => answer.questionId === question.id
@@ -100,24 +122,33 @@ function Side() {
   );
 }
 
-function Grades({ grade }: { grade: Grade }) {
+function Grades({ grade, subject }: { grade: Grade; subject: Subject }) {
+  if ([Subject.LISTENING, Subject.READING].includes(subject)) {
+    return (
+      <div className="flex flex-col gap-2 justify-center w-full">
+        <div className="w-full text-center">
+          <span className="text-[#595959] text-xl font-semibold">得分：</span>
+          <span className="text-[#1782FF] text-xl font-semibold">
+            {grade.score}
+          </span>
+        </div>
+        <div className="w-full text-center">
+          <div>
+            <span className="text-[#595959]  font-semibold">NCLC分数：</span>
+            <span className="text-[#1782FF]  font-semibold">{grade.nclc}</span>
+          </div>
+          <div>
+            <span className="text-[#595959]  font-semibold">CECRL等级：</span>
+            <span className="text-[#1782FF]  font-semibold">{grade.ceral}</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className="flex flex-col gap-2 justify-center w-full">
       <div className="w-full text-center">
-        <span className="text-[#595959] text-xl font-semibold">得分：</span>
-        <span className="text-[#1782FF] text-xl font-semibold">
-          {grade.score}
-        </span>
-      </div>
-      <div className="w-full text-center">
-        <div>
-          <span className="text-[#595959]  font-semibold">NCLC分数：</span>
-          <span className="text-[#1782FF]  font-semibold">{grade.nclc}</span>
-        </div>
-        <div>
-          <span className="text-[#595959]  font-semibold">CECRL等级：</span>
-          <span className="text-[#1782FF]  font-semibold">{grade.ceral}</span>
-        </div>
+        <span className="text-[#595959] text-xl font-semibold">无评分</span>
       </div>
     </div>
   );

@@ -20,9 +20,6 @@ export const getSuiteHistory = async ({
   itemsPerPage: number;
   suiteId: string;
 }) => {
-  console.log("currentPage", currentPage);
-  console.log("itemsPerPage", itemsPerPage);
-  console.log("suiteId", suiteId);
   const data = await fetchQuery<{
     items: {
       practiceId: string;
@@ -30,6 +27,7 @@ export const getSuiteHistory = async ({
       practiceMode: string;
       createdAt: string;
       score: number | null;
+      submittedAt: Date | null;
     }[];
     total: number;
   }>({

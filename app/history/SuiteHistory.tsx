@@ -86,7 +86,7 @@ function SuiteHistory({ suiteId }: { suiteId: string }) {
             className="flex flex-row w-full h-full justify-between"
           >
             <div className="flex flex-row gap-2 items-center">
-              {item.score ? (
+              {item.submittedAt ? (
                 <div className="flex flex-row gap-2 items-center">
                   <div>
                     <span className="text-gray-500">已完成 </span>

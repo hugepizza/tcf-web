@@ -1,12 +1,15 @@
 import { Badge } from "@/components/ui/badge";
+import { Subject } from "@/shared/enum";
 import Link from "next/link";
 
 export function GradeTag({
   score,
   practiceId,
+  subject,
 }: {
   score: number | null;
   practiceId: string;
+  subject: Subject;
 }) {
   // 根据分数确定徽章的背景颜色
   const getBadgeColor = (score: number) => {
@@ -22,7 +25,13 @@ export function GradeTag({
         variant="outline"
         className={`w-[72px] rounded-lg ${getBadgeColor(score)} text-center`}
       >
-        <div className="w-full text-center">{score}分</div>
+        <div className="w-full text-center">
+          {[Subject.LISTENING, Subject.READING].includes(subject) ? (
+            <div className="w-full text-center">{score}分</div>
+          ) : (
+            <div className="w-full text-center">无评分</div>
+          )}
+        </div>
       </Badge>
     );
   } else {

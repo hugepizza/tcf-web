@@ -18,6 +18,7 @@ import {
   DisclosureContent,
 } from "@/components/core/disclosure";
 import React from "react";
+import WritingInput from "./WritingInput";
 
 function Main() {
   const {
@@ -38,10 +39,7 @@ function Main() {
   if (!currentQuestion) {
     notFound();
   }
-  console.log(
-    clientSideAnswers.find((answer) => answer.questionId === currentQuestion.id)
-  );
-  console.log("env", process.env.NEXT_PUBLIC_ASSETS_DOMAIN);
+
   return (
     <div className="flex w-full h-full flex-col lg:flex-row ">
       <div className="flex flex-col flex-1 bg-gray-50">
@@ -49,20 +47,27 @@ function Main() {
           questionIndex={currentQuestionIndex}
           difficulty={currentQuestion.difficulty}
           score={currentQuestion.score}
+          subject={currentQuestion.subject}
+          writingTache={currentQuestion.writingContent?.tache || ""}
         />
         <div className="grow flex flex-col min-h-0">
           <div className="grow flex flex-col min-h-0">
-            <div className="grow overflow-auto">
-              <div className="h-full flex flex-col items-center py-2">
-                <ListeningImageContent question={currentQuestion} />
-                <div className="flex flex-col w-full">
-                  <div className="flex justify-center">
-                    <ReadingImageContent question={currentQuestion} />
+            {[Subject.LISTENING, Subject.READING].includes(
+              currentQuestion.subject
+            ) && (
+              <div className="grow overflow-auto">
+                <div className="h-full flex flex-col items-center py-2">
+                  <ListeningImageContent question={currentQuestion} />
+                  <div className="flex flex-col w-full">
+                    <div className="flex justify-center">
+                      <ReadingImageContent question={currentQuestion} />
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-            <div className="flex-none">
+            )}
+
+            <div className="flex-none grow">
               <AnswerCard>
                 {currentQuestion.subject === Subject.READING &&
                   currentQuestion.imageContent?.questions && (
@@ -80,30 +85,77 @@ function Main() {
                   </div>
                 )}
                 {/* 选项*/}
-                <div className="w-full flex flex-col gap-2">
-                  {currentQuestion.options.map((option, index) => (
-                    <Option
-                      key={index}
-                      index={index}
-                      content={option}
-                      isSubmitted={isSubmitted}
-                      userAnswer={
-                        clientSideCurrentAnswer ||
-                        clientSideAnswers.find(
-                          (answer) => answer.questionId === currentQuestion.id
-                        )?.answer ||
-                        ""
-                      }
-                      answerKey={
-                        clientSideAnswers.find(
-                          (answer) => answer.questionId === currentQuestion.id
-                        )?.answerKey ?? ""
-                      }
-                      readOnly={isClientSideReadOnly}
-                      setUserAnswer={setClientSideCurrentAnswer}
-                    />
-                  ))}
-                </div>
+                {[Subject.LISTENING, Subject.READING].includes(
+                  currentQuestion.subject
+                ) && (
+                  <div className="w-full flex flex-col gap-2">
+                    {currentQuestion.options.map((option, index) => (
+                      <Option
+                        key={index}
+                        index={index}
+                        content={option}
+                        isSubmitted={isSubmitted}
+                        userAnswer={
+                          clientSideCurrentAnswer ||
+                          clientSideAnswers.find(
+                            (answer) => answer.questionId === currentQuestion.id
+                          )?.answer ||
+                          ""
+                        }
+                        answerKey={
+                          clientSideAnswers.find(
+                            (answer) => answer.questionId === currentQuestion.id
+                          )?.answerKey ?? ""
+                        }
+                        readOnly={isClientSideReadOnly}
+                        setUserAnswer={setClientSideCurrentAnswer}
+                      />
+                    ))}
+                  </div>
+                )}
+                {currentQuestion.subject === Subject.WRITING && (
+                  <div className="w-full h-full flex flex-col">
+                    <div className="gap-4 flex flex-col">
+                      <div className="w-full flex flex-col gap-2 text-[#434343] font-semibold">
+                        {currentQuestion.writingContent?.background}
+                      </div>
+                      <div className="w-full flex flex-col gap-2 font-semibold text-[#1F7FFF]">
+                        {currentQuestion.writingContent?.requirements}
+                      </div>
+                      <div className="w-full flex flex-col gap-2 text-[#434343]">
+                        {currentQuestion.writingContent?.tache === "1"
+                          ? "(60 mots minimum/120 mots maximum) "
+                          : currentQuestion.writingContent?.tache === "2"
+                          ? "(120 mots minimum/150 mots maximum) "
+                          : "(Nombre de mots attendu : minimum 120 mots/maximum 180 mots. Soit entre 40 et 60 mots pour la 1e partie de la tâche et entre 80 et 120 mots pour la 2e partie de la tâche. )"}
+                      </div>
+                    </div>
+                    <div className="w-full mt-4 grow">
+                      {/* clientSideCurrentAnswer：{clientSideCurrentAnswer}
+                      <br />
+                      clientSideAnswers.find
+                      {clientSideAnswers.find(
+                        (answer) => answer.questionId === currentQuestion.id
+                      )?.answer || ""}
+                      <br />
+                      clientSideAnswers
+                      {JSON.stringify(clientSideAnswers)} */}
+                      <WritingInput
+                        text={
+                          clientSideCurrentAnswer ||
+                          clientSideAnswers.find(
+                            (answer) => answer.questionId === currentQuestion.id
+                          )?.answer ||
+                          ""
+                        }
+                        setText={setClientSideCurrentAnswer}
+                        disabled={isSubmitted || isClientSideReadOnly}
+                        practiceId={practice.id}
+                        questionIndex={currentQuestionIndex}
+                      />
+                    </div>
+                  </div>
+                )}
               </AnswerCard>
             </div>
           </div>
@@ -141,6 +193,16 @@ function Main() {
               optionsTranslation={currentQuestion.optionsTranslation}
             />
           )}
+        {currentQuestion.subject === Subject.WRITING &&
+          currentQuestion.writingContent && (
+            <WritingTranslation
+              background={currentQuestion.writingContent.backgroundTranslation}
+              requirements={
+                currentQuestion.writingContent.requirementsTranslation
+              }
+              docoments={currentQuestion.writingContent.documentTranslation}
+            />
+          )}
       </div>
     </div>
   );
@@ -150,25 +212,39 @@ function PracticeHeader({
   questionIndex,
   difficulty,
   score,
+  subject,
+  writingTache,
 }: {
   questionIndex: number;
   difficulty: string;
   score: number;
+  subject: Subject;
+  writingTache: string;
 }) {
   return (
     <div className="text-lg flex flex-wrap items-center gap-3 sm:gap-6 px-3 py-4 h-auto sm:h-14 bg-white border-b border-gray-100">
-      <div className="flex items-center gap-2">
-        <AlignLeft className="w-4 h-4" />
-        <span className="font-medium">Question {questionIndex + 1}</span>
-      </div>
-      <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-gray-500 text-sm sm:text-base">
-        <div>
-          难度：<span className="text-gray-700">{difficulty}</span>
+      {[Subject.LISTENING, Subject.READING].includes(subject) && (
+        <>
+          <div className="flex items-center gap-2">
+            <AlignLeft className="w-4 h-4" />
+            <span className="font-medium">Question {questionIndex + 1}</span>
+          </div>
+          <div className="flex flex-wrap items-center gap-2 sm:gap-4 text-gray-500 text-sm sm:text-base">
+            <div>
+              难度：<span className="text-gray-700">{difficulty}</span>
+            </div>
+            <div>
+              分值：<span className="text-gray-700">{score}分</span>
+            </div>
+          </div>
+        </>
+      )}
+      {subject === Subject.WRITING && (
+        <div className="flex items-center gap-2">
+          <AlignLeft className="w-4 h-4" />
+          <span className="font-medium">Tâche {writingTache}</span>
         </div>
-        <div>
-          分值：<span className="text-gray-700">{score}分</span>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
@@ -379,10 +455,68 @@ function ReadingTranslation({
     </div>
   );
 }
+function WritingTranslation({
+  background,
+  requirements,
+  docoments,
+}: {
+  background: string;
+  requirements: string;
+  docoments: string[];
+}) {
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  return (
+    <div className="bg-gray-50 rounded-lg p-1 m-2">
+      <Disclosure open={isOpen} onOpenChange={setIsOpen}>
+        <DisclosureTrigger>
+          <div className="text-sm h-8 font-medium text-gray-500 flex items-center justify-between px-2 cursor-pointer">
+            <div className="flex items-center gap-1">
+              <Languages className="w-4 h-4" />
+              写作翻译
+            </div>
+            <span className="text-xs text-gray-400">
+              {isOpen ? "收起" : "展开"}
+            </span>
+          </div>
+        </DisclosureTrigger>
+        <DisclosureContent>
+          <div className="bg-white rounded-md p-2 border-gray-200 border">
+            <div className="text-sm font-medium text-gray-500 mb-1">背景：</div>
+            <div className="text-sm text-gray-800 leading-relaxed">
+              {background}
+            </div>
+          </div>
+          <div className="bg-white rounded-md p-2 mt-1 border-gray-200 border">
+            <div className="text-sm font-medium text-gray-500 mb-1">要求：</div>
+            <div className="text-sm text-gray-800 leading-relaxed">
+              {requirements}
+            </div>
+          </div>
+          {docoments
+            .filter((docoment) => docoment.length > 0)
+            .map((docoment, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-md p-2 mt-1 border-gray-200 border"
+              >
+                <div className="text-sm font-medium text-gray-500 mb-1">
+                  文档{index + 1}：
+                </div>
+                <div className="text-sm text-gray-800 leading-relaxed">
+                  {docoment}
+                </div>
+              </div>
+            ))}
+        </DisclosureContent>
+      </Disclosure>
+    </div>
+  );
+}
 
 function AnswerCard({ children }: { children: React.ReactNode }) {
   return (
-    <div className="border-t border-gray-100 bg-white mx-2 mb-2 rounded-md p-3 sm:p-6 flex flex-col items-center gap-3 sm:gap-4">
+    <div className="h-full border-t border-gray-100 bg-white mx-2 mb-2 rounded-md p-3 sm:p-6 flex flex-col items-center gap-3 sm:gap-4">
       {children}
     </div>
   );

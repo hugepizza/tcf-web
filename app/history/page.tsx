@@ -31,6 +31,7 @@ import {
 import HeaderServer from "@/components/Header/Universal";
 import { deletePractice } from "./actions";
 import { DeleteAll } from "./Delete";
+import { Subject } from "@/shared/enum";
 async function ResourcesPage({
   params,
   searchParams,
@@ -49,6 +50,7 @@ async function ResourcesPage({
       practiceMode: string;
       createdAt: string;
       score: number | null;
+      subject: Subject;
     }[];
     total: number;
   }>({
@@ -135,6 +137,7 @@ async function ResourcesPage({
                 date={item.createdAt}
                 suiteName={item.suiteName}
                 practiceMode={item.practiceMode}
+                subject={item.subject}
               />
             ))}
           </TableBody>
